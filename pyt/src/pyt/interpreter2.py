@@ -93,6 +93,8 @@ def interpret(cc,stck):
             stck=[]
             stck.append(median(stckk))
     elif cc==u"Ϻ":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append(mode(stck.pop())[0,0])
         else:
@@ -236,6 +238,8 @@ def interpret(cc,stck):
     elif cc==u"⅟":
         stck.append(1./stck.pop())
     elif cc==u"Ƨ":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append(stck.pop()[::2])
         else:
@@ -297,6 +301,8 @@ def interpret(cc,stck):
             stck=[]
             stck.append([min(stckk),max(stckk)])
     elif cc==u"↔":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck[-1].reverse()
         else:
@@ -374,6 +380,8 @@ def interpret(cc,stck):
         stck.append(int(2**ceil(log(q,2))-q))
     elif cc==u"%":
         q=float(stck.pop())
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append(np.array(stck.pop())%q)
         else:
@@ -455,6 +463,9 @@ def interpret(cc,stck):
         elif(isinstance(stck[-1],list) and isinstance(stck[-1],list)):
             q=stck.pop()
             stck.append((np.array(stck.pop())*np.array(q)).tolist())
+        elif(isinstance(stck[-1],np.ndarray)):
+            q=stck.pop()
+            stck.append((q*stck.pop()).tolist)
         else:
             q=float(stck.pop())
             if(isinstance(stck[-1],list)):
@@ -464,18 +475,24 @@ def interpret(cc,stck):
             else:
                 stck.append(stck.pop()*q)
     elif cc==u"△":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append([(x**2+x)/2 for x in stck.pop()])
         else:
             q=stck.pop()
             stck.append((q**2+q)/2)
     elif cc==u"⬠":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append([(3*x**2-x)/2 for x in stck.pop()])
         else:
             q=stck.pop()
             stck.append((3*q**2-q)/2)
     elif cc==u"⬡":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append([2*x**2-x for x in stck.pop()])
         else:
@@ -555,14 +572,24 @@ def interpret(cc,stck):
         else:
             stck.append(cos(stck.pop()))
     elif cc==u"¢":
-        stck.append(1-stck.pop())
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
+        if(isinstance(stck[-1],list)):
+            stck.append([1-x for x in stck.pop()])
+        else:
+            stck.append(1-stck.pop())
     elif cc==u"ć":
         n=int(stck.pop())
         r=int(stck.pop())
         stck.append(factorial(n)/(factorial(r)*factorial(n-r)))
     elif cc==u"Ć":
         n=stck.pop()
-        stck.append(factorial(2*n)/(factorial(n+1)*factorial(n)))
+        if(isinstance(n,np.ndarray)):
+            n=n.tolist()
+        if(isinstance(n,list)):
+            stck.append([factorial(2*x)/(factorial(x+1)*factorial(x)) for x in n])
+        else:
+            stck.append(factorial(2*n)/(factorial(n+1)*factorial(n)))
     elif cc==u"ḋ":
         stck.append(primeFactors(stck.pop()))
     elif cc==u"₫":
@@ -586,6 +613,8 @@ def interpret(cc,stck):
             qq=int(qq)
         stck.append(readasbase(str(qq),q))
     elif cc==u"ǰ":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append(str(stck.pop()).replace('[','').replace(']','').replace(',',''))
         else:
@@ -593,7 +622,12 @@ def interpret(cc,stck):
             stck=[]
             stck.append(str(stckk).replace('[','').replace(']','').replace(',',''))
     elif cc==u"Ɩ":
-        stck.append(int(stck.pop()))
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
+        if(isinstance(stck[-1],list)):
+            stck.append([int(x) for x in stck.pop()])
+        else:
+            stck.append(int(stck.pop()))
     elif cc==u"Ḷ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.log10(stck.pop()))
@@ -610,12 +644,19 @@ def interpret(cc,stck):
             stck.append(log(stck.pop()))
     elif cc==u"Ľ":
         q=stck.pop()
-        stck.append(log(stck.pop(),q))
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
+        if(isinstance(stck[-1],list)):
+            stck.append([log(x,q) for x in stck.pop()])
+        else:
+            stck.append(log(stck.pop(),q))
     elif cc==u"Ĺ":
         q=stck.pop()
         qq=stck.pop()
         stck.append(qq/gcd(q,qq))
     elif cc==u"Ł":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append(len(stck.pop()))
         else:
@@ -639,11 +680,22 @@ def interpret(cc,stck):
         stck.append("0123456789")
     elif cc==u"Ṕ":
         q=stck.pop()
-        print(str(base(int(stck.pop()),int(q)))+"\n")
+        qq=stck.pop()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        if(isinstance(qq,list)):
+            print([str(base(int(x),q)) for x in qq]+"\n")
+        else:
+            print(str(base(int(qq),int(q)))+"\n")
     elif cc==u"Ƥ":
         print(str(stck.pop())+"\n")
     elif cc==u"Ƿ":
-        stck.append(bin(int(stck.pop()))+"\n")
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            print([bin(int(x)) for x in q]+"\n")
+        print(bin(int(q))+"\n")
     elif cc==u"Ҏ":
         q=stck.pop()
         w=str(int(q))
@@ -657,17 +709,26 @@ def interpret(cc,stck):
         q=stck.pop()
         stck.append(str(q)==str(q)[::-1])
     elif cc==u"ṕ":
-        q=int(stck.pop())
-        if(isinstance(stck[-1],list)):
-            print([base(int(x),q) for x in stck.pop()])
+        q=stck.pop()
+        qq=stck.pop()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        if(isinstance(qq,list)):
+            print([str(base(int(x),q)) for x in qq])
         else:
-            print(base(int(stck.pop()),q))
+            print(str(base(int(qq),int(q)))+"\n")
     elif cc==u"ƥ":
         print(stck.pop())
     elif cc==u"ṗ":
         stck.append(isPrime(int(stck.pop())))
     elif cc==u"ƿ":
-        print(bin(int(stck.pop())))
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            print([bin(int(x)) for x in q])
+        else:
+            print(bin(int(q)))
     elif cc==u"ϼ":
         stck.append(getUnique(primeFactors(int(stck.pop()))))
     elif cc==u"ҏ":
@@ -702,6 +763,8 @@ def interpret(cc,stck):
     elif cc==u"ř":
         stck.append(range(1,int(stck.pop())+1))
     elif cc==u"Ş":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist())
         if(isinstance(stck[-1],list)):
             stck.append(sorted(stck.pop())[::-1])
         else:
@@ -728,6 +791,8 @@ def interpret(cc,stck):
             i+=int(j)
         stck.append(i)
     elif cc==u"ş" or cc==u"ş":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append(sorted(stck.pop()))
         else:
@@ -748,6 +813,8 @@ def interpret(cc,stck):
             stck.append(sin(stck.pop()))
     elif cc==u"Ș": # Reverse last k items (in stack if not list)
         q=stck.pop()
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             qq=stck.pop()
             qqq=qq[-q:]
@@ -820,6 +887,8 @@ def interpret(cc,stck):
             stck=[]
             stck.append(all(x==stckk[0] for x in stckk))
     elif cc==u"_": #Negative of number
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
             stck.append([-x for x in stck.pop()])
         else:
