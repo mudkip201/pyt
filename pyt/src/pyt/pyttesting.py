@@ -130,3 +130,6 @@ parse(u"ʊ")
 parse(u"5ř5řŽ")
 parse(u"9ř0^≡")
 parse(u"9ř≡")
+
+
+parse(u"←←")
