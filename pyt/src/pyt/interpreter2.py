@@ -23,6 +23,7 @@ from scipy.stats import mode
 from math import factorial, sqrt, pow, floor, ceil, sin, cos, tan, cosh, sinh, tanh, acos, acosh, atan, atanh, asin, asinh, log
 from itertools import count, islice
 import random
+from scipy.misc import factorial2
 
 
 def parse(line, stck):
@@ -247,10 +248,13 @@ def interpret(cc,stck):
         q=stck.pop()
         stck.append(stck.pop()%q==0)
     elif cc==u"!":
-        if(isinstance(stck[-1],list)):
-            stck.append([factorial(x) for x in stck.pop()])
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([factorial(x) for x in q])
         else:
-            stck.append(factorial(stck.pop()))
+            stck.append(factorial(q))
     elif cc==u"÷":
         q=stck.pop()
         if(isinstance(stck[-1],np.ndarray)):
@@ -296,12 +300,10 @@ def interpret(cc,stck):
         else:
             stck.reverse()
     elif cc==u"⇹":
-        print(stck)
         q=stck.pop()
         qq=stck.pop()
         stck.append(q)
         stck.append(qq)
-        print(stck)
     elif cc==u"¬":
         stck.append(not stck.pop())
     elif cc==u"^":
@@ -372,11 +374,18 @@ def interpret(cc,stck):
         else:
             stck.append(stck.pop()%q)
     elif cc==u"/":
-        q=float(stck.pop())
-        if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop())/q)
+        if(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],np.ndarray)):
+           q=stck.pop()
+           stck.append(stck.pop()/q)
+        elif(isinstance(stck[-1],list) and isinstance(stck[-2],list)):
+            q=stck.pop()
+            stck.append(np.array(stck.pop())/np.array(q))
         else:
-            stck.append(stck.pop()/q)
+            q=float(stck.pop())
+            if(isinstance(stck[-1],list)):
+                stck.append(np.array(stck.pop())/q)
+            else:
+                stck.append(stck.pop()/q)
     elif cc==u"+":
         q=float(stck.pop())
         if(isinstance(stck[-1],list)):
@@ -396,14 +405,23 @@ def interpret(cc,stck):
         else:
             stck.append(stck.pop()*q)
     elif cc==u"△":
-        q=stck.pop()
-        stck.append((q**2+q)/2)
+        if(isinstance(stck[-1],list)):
+            stck.append([(x**2+x)/2 for x in stck.pop()])
+        else:
+            q=stck.pop()
+            stck.append((q**2+q)/2)
     elif cc==u"⬠":
-        q=stck.pop()
-        stck.append((3*q**2-q)/2)
+        if(isinstance(stck[-1],list)):
+            stck.append([(3*x**2-x)/2 for x in stck.pop()])
+        else:
+            q=stck.pop()
+            stck.append((3*q**2-q)/2)
     elif cc==u"⬡":
-        q=stck.pop()
-        stck.append(2*q**2-q)
+        if(isinstance(stck[-1],list)):
+            stck.append([2*x**2-x for x in stck.pop()])
+        else:
+            q=stck.pop()
+            stck.append(2*q**2-q)
     elif cc==u"∧":
         q=stck.pop()
         stck.append(stck.pop() and q)
@@ -504,7 +522,10 @@ def interpret(cc,stck):
         stck.append(hamming(stck.pop()))
     elif cc==u"Ĩ":
         q=stck.pop()
-        stck.append(readasbase(str(stck.pop()),q))
+        qq=stck.pop()
+        if(isinstance(qq,float)):
+            qq=int(qq)
+        stck.append(readasbase(str(qq),q))
     elif cc==u"ǰ":
         if(isinstance(stck[-1],list)):
             stck.append(str(stck.pop()).replace('[','').replace(']','').replace(',',''))
@@ -676,9 +697,7 @@ def interpret(cc,stck):
             stckk=stck[-q:]
             stckk=stckk[::-1]
             stckkk=stck[:-q]
-            print(stck,stck[0:-q],stckk,stck[0:-q]+stckk)
             stck=stckkk+stckk
-            print(stck)
     elif cc==u"Ť":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.tanh(stck.pop()))
@@ -746,6 +765,15 @@ def interpret(cc,stck):
             stck.append([-x for x in stck.pop()])
         else:
             stck.append(-1*stck.pop())
+    elif cc==u"‼": #Double factorial
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([factorial2(int(x)).tolist() for x in q])
+        else:
+            stck.append(factorial2(q))
+
     return stck
 
     #²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟°|!÷↑↓↕↔¬^«»≤≥<>=≠√∛∜∞∈~˜.%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶Å∀ḄƁÇČƇçč¢ḋ₫eḞƑǤĦḤĨƖĮĻĽĹŁĿļɬɫṀɳỌꝎṔƤǷҎᑭ₽ṕƥṗƿϼҏŘɽɼɾɹʀʁŞŠŜŚşŝšŤŦťŧỤʊŽǂǁΣΠμϺπφ
@@ -833,12 +861,12 @@ def readasbase(st,bb):
     i=0
     while(st!=""):
         i*=bb
-        c=st[-1]
+        c=st[0]
         if(c in ['0','1','2','3','4','5','6','7','8','9']):
             i+=int(c)
         elif(c in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'):
             i+=ord(c)-55
         elif(c in 'abcdefghijklmnopqrstuvwxyz'):
             i+=ord(c)-61
-        st=st[:-1]
+        st=st[1:]
     return i
