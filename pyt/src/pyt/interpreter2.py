@@ -10,6 +10,8 @@
     '''
 
 
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéḞǤĦĨƖǰḶĻĽĹŁĿļɬɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼"
+
 
 
 import string
@@ -50,6 +52,7 @@ def parse(line, stck):
 
 
 def interpret(cc,stck):
+    print(stck,cc)
     if(cc in string.digits):
         stck.append(int(cc))
     elif cc==u"Σ" or cc==u"Ʃ":
@@ -308,10 +311,13 @@ def interpret(cc,stck):
         stck.append(not stck.pop())
     elif cc==u"^":
         q=stck.pop()
-        if(isinstance(stck[-1],list)):
-            stck.append(np.power(stck.pop(),q))
+        qq=stck.pop()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        if(isinstance(qq,list)):
+            stck.append(np.power(qq,q))
         else:
-            stck.append(math.pow(stck.pop(),q))
+            stck.append(math.pow(qq,q))
     elif cc==u"«":
         q=stck.pop()
         stck.append(stck.pop()<<q)
@@ -377,6 +383,9 @@ def interpret(cc,stck):
         if(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],np.ndarray)):
            q=stck.pop()
            stck.append(stck.pop()/q)
+        elif(isinstance(stck[-1],list) and isinstance(stck[-2],np.ndarray)):
+            q=np.array(stck.pop())
+            stck.append((stck.pop()/q).tolist())
         elif(isinstance(stck[-1],list) and isinstance(stck[-2],list)):
             q=stck.pop()
             stck.append(np.array(stck.pop())/np.array(q))
@@ -399,11 +408,18 @@ def interpret(cc,stck):
         else:
             stck.append(stck.pop()-q)
     elif cc==u"*":
-        q=float(stck.pop())
-        if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop())*q)
-        else:
+        if(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],np.ndarray)):
+            q=stck.pop()
             stck.append(stck.pop()*q)
+        elif(isinstance(stck[-1],list) and isinstance(stck[-1],list)):
+            q=stck.pop()
+            stck.append((np.array(stck.pop())*np.array(q)).tolist())
+        else:
+            q=float(stck.pop())
+            if(isinstance(stck[-1],list)):
+                stck.append(np.array(stck.pop())*q)
+            else:
+                stck.append(stck.pop()*q)
     elif cc==u"△":
         if(isinstance(stck[-1],list)):
             stck.append([(x**2+x)/2 for x in stck.pop()])
@@ -776,7 +792,7 @@ def interpret(cc,stck):
 
     return stck
 
-    #²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟°|!÷↑↓↕↔¬^«»≤≥<>=≠√∛∜∞∈~˜.%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶Å∀ḄƁÇČƇçč¢ḋ₫eḞƑǤĦḤĨƖĮĻĽĹŁĿļɬɫṀɳỌꝎṔƤǷҎᑭ₽ṕƥṗƿϼҏŘɽɼɾɹʀʁŞŠŜŚşŝšŤŦťŧỤʊŽǂǁΣΠμϺπφ
+    #²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟°|!÷↑↓↕↔¬^«»≤≥<>=≠√∛∜∞∈~˜.%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶Å∀ḄƁÇČƇçč¢ḋ₫ĐéḞƑǤĦḤĨƖĮĻĽĹŁĿļɬɫṀɳỌꝎṔƤǷҎᑭ₽ṕƥṗƿϼҏŘɽɼɾɹʀʁŞŠŜŚşŝšŤŦťŧỤʊŽǂǁΣΠμϺπφ
 
 
 def isPrime(n):
