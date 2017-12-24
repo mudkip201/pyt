@@ -894,7 +894,6 @@ def interpret(cc,stck):
             stck.append(all(x==stckk[0] for x in stckk))
     elif cc==u"_": #Negative of number
         q=stck.pop()
-        print(type(q))
         if(isinstance(q,np.ndarray)):
             q=q.tolist()
         if(isinstance(q,list)):
