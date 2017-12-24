@@ -288,7 +288,13 @@ def interpret(cc,stck):
             stck=[]
             stck.append(min(stckk))
     elif cc==u"←":
-        stck.append(raw_input())
+        q=raw_input()
+        try:
+            qq=float(q)
+        except ValueError:
+            qq=q
+        stck.append(qq)
+    #stck.append(raw_input())
     elif cc==u"↕":
         if(isinstance(stck[-1],np.ndarray)):
             q=stck.pop()
@@ -887,12 +893,14 @@ def interpret(cc,stck):
             stck=[]
             stck.append(all(x==stckk[0] for x in stckk))
     elif cc==u"_": #Negative of number
-        if(isinstance(stck[-1],np.ndarray)):
-            stck.append(stck.pop().tolist)
-        if(isinstance(stck[-1],list)):
-            stck.append([-x for x in stck.pop()])
+        q=stck.pop()
+        print(type(q))
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([-x for x in q])
         else:
-            stck.append(-1*stck.pop())
+            stck.append(-stck.pop())
     elif cc==u"‼": #Double factorial
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
