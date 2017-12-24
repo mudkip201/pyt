@@ -42,7 +42,7 @@ def parse(line, stck):
             stck.append(int(d))
             else:
             stck.append(d)'''
-        interpret(cc,stck)
+        stck=interpret(cc,stck)
     for j in stck:
         print(j)
     return stck
@@ -296,10 +296,12 @@ def interpret(cc,stck):
         else:
             stck.reverse()
     elif cc==u"⇹":
+        print(stck)
         q=stck.pop()
         qq=stck.pop()
         stck.append(q)
         stck.append(qq)
+        print(stck)
     elif cc==u"¬":
         stck.append(not stck.pop())
     elif cc==u"^":
@@ -491,7 +493,7 @@ def interpret(cc,stck):
         stck.append(int(q))
     elif cc==u"Đ": #duplicate item on top of stack
         q=stck.pop()
-        stck.append(q).append(q)
+        stck+=[q,q]
     elif cc==u"é":
         stck.append(2.71828182845904523536028747135266249775724709369995)
     elif cc==u"Ḟ":
@@ -502,7 +504,7 @@ def interpret(cc,stck):
         stck.append(hamming(stck.pop()))
     elif cc==u"Ĩ":
         q=stck.pop()
-        stck.append(readasbase(stck.pop(),q))
+        stck.append(readasbase(str(stck.pop()),q))
     elif cc==u"ǰ":
         if(isinstance(stck[-1],list)):
             stck.append(str(stck.pop()).replace('[','').replace(']','').replace(',',''))
@@ -576,7 +578,10 @@ def interpret(cc,stck):
         stck.append(str(q)==str(q)[::-1])
     elif cc==u"ṕ":
         q=int(stck.pop())
-        print(base(int(stck.pop()),q))
+        if(isinstance(stck[-1],list)):
+            print([base(int(x),q) for x in stck.pop()])
+        else:
+            print(base(int(stck.pop()),q))
     elif cc==u"ƥ":
         print(stck.pop())
     elif cc==u"ṗ":
@@ -661,11 +666,19 @@ def interpret(cc,stck):
             stck.append([sin(x) for x in stck.pop()])
         else:
             stck.append(sin(stck.pop()))
-    elif cc==u"Ș": # Reverse last k items in stack
+    elif cc==u"Ș": # Reverse last k items (in stack if not list)
         q=stck.pop()
-        stckk=stck[-q:-1]
-        stckk=stckk[::-1]
-        stck=stck[:-q]+stckk
+        if(isinstance(stck[-1],list)):
+            qq=stck.pop()
+            qqq=qq[-q:]
+            stck.append(qq[0:-q]+qqq[::-1])
+        else:
+            stckk=stck[-q:]
+            stckk=stckk[::-1]
+            stckkk=stck[:-q]
+            print(stck,stck[0:-q],stckk,stck[0:-q]+stckk)
+            stck=stckkk+stckk
+            print(stck)
     elif cc==u"Ť":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.tanh(stck.pop()))
@@ -729,11 +742,11 @@ def interpret(cc,stck):
             stck=[]
             stck.append(all(x==stckk[0] for x in stckk))
     elif cc==u"_": #Negative of number
-        if(isintance(stck[-1],list)):
+        if(isinstance(stck[-1],list)):
             stck.append([-x for x in stck.pop()])
         else:
             stck.append(-1*stck.pop())
-
+    return stck
 
     #²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟°|!÷↑↓↕↔¬^«»≤≥<>=≠√∛∜∞∈~˜.%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶Å∀ḄƁÇČƇçč¢ḋ₫eḞƑǤĦḤĨƖĮĻĽĹŁĿļɬɫṀɳỌꝎṔƤǷҎᑭ₽ṕƥṗƿϼҏŘɽɼɾɹʀʁŞŠŜŚşŝšŤŦťŧỤʊŽǂǁΣΠμϺπφ
 

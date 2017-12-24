@@ -6,7 +6,7 @@ Created on Dec 22, 2017
 @author: matthewcowen-green
 '''
 
-import pyt.interpreter as pyt
+import interpreter2 as pyt
 
 def parse(line):
     return pyt.parse(line,[])
@@ -130,6 +130,9 @@ parse(u"ʊ")
 parse(u"5ř5řŽ")
 parse(u"9ř0^≡")
 parse(u"9ř≡")
+parse(u"9Đ")
+parse(u"9ř5Ș")
+parse(u"5_")
+parse(u"←←3Đ3Ș⇹Ĩ3Ș⇹Ĩ⇹Ř3ṕ")
 
-
-parse(u"←←")
+#parse(u"←←")
