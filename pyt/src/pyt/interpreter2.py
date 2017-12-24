@@ -489,6 +489,9 @@ def interpret(cc,stck):
     elif cc==u"₫":
         q=(""+str(int(stck.pop())))[::-1]
         stck.append(int(q))
+    elif cc==u"Đ": #duplicate item on top of stack
+        q=stck.pop()
+        stck.append(q).append(q)
     elif cc==u"é":
         stck.append(2.71828182845904523536028747135266249775724709369995)
     elif cc==u"Ḟ":
@@ -658,6 +661,11 @@ def interpret(cc,stck):
             stck.append([sin(x) for x in stck.pop()])
         else:
             stck.append(sin(stck.pop()))
+    elif cc==u"Ș": # Reverse last k items in stack
+        q=stck.pop()
+        stckk=stck[-q:-1]
+        stckk=stckk[::-1]
+        stck=stck[:-q]+stckk
     elif cc==u"Ť":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.tanh(stck.pop()))
@@ -720,6 +728,13 @@ def interpret(cc,stck):
             stckk=stck
             stck=[]
             stck.append(all(x==stckk[0] for x in stckk))
+    elif cc==u"_": #Negative of number
+        if(isintance(stck[-1],list)):
+            stck.append([-x for x in stck.pop()])
+        else:
+            stck.append(-1*stck.pop())
+
+
     #²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟°|!÷↑↓↕↔¬^«»≤≥<>=≠√∛∜∞∈~˜.%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶Å∀ḄƁÇČƇçč¢ḋ₫eḞƑǤĦḤĨƖĮĻĽĹŁĿļɬɫṀɳỌꝎṔƤǷҎᑭ₽ṕƥṗƿϼҏŘɽɼɾɹʀʁŞŠŜŚşŝšŤŦťŧỤʊŽǂǁΣΠμϺπφ
 
 
