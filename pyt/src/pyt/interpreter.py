@@ -21,7 +21,7 @@ from numpy import median, Infinity
 import numpy as np
 from scipy.stats import mode
 from math import factorial, sqrt, pow, floor, ceil, sin, cos, tan, cosh, sinh, tanh, acos, acosh, atan, atanh, asin, asinh, log
-from itertools import count, islice, product
+from itertools import count, islice
 import random
 
 
