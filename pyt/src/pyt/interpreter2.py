@@ -52,7 +52,6 @@ def parse(line, stck):
 
 
 def interpret(cc,stck):
-    print(stck,cc)
     if(cc in string.digits):
         stck.append(int(cc))
     elif cc==u"Σ" or cc==u"Ʃ":
