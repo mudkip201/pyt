@@ -46,8 +46,8 @@ def parse(line, stck):
             stck.append(int(d))
             else:
             stck.append(d)'''
+        #print(stck,cc)
         stck,i=interpret(cc,stck,i,line)
-        #print(stck)
         i+=1
     for j in stck:
         print(j)
@@ -55,8 +55,10 @@ def parse(line, stck):
 
 
 def interpret(cc,stck,i,line):
+    #   print(stck,cc)
     if(cc in string.digits):
         stck.append(int(cc))
+        return stck,i
     elif cc==u"Σ" or cc==u"Ʃ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().sum())
@@ -713,7 +715,8 @@ def interpret(cc,stck,i,line):
             q=q.tolist()
         if(isinstance(q,list)):
             print([bin(int(x)) for x in q]+"\n")
-        print(bin(int(q))+"\n")
+        else:
+            print(bin(int(q))+"\n")
     elif cc==u"Ҏ":
         q=stck.pop()
         w=str(int(q))
@@ -734,7 +737,7 @@ def interpret(cc,stck,i,line):
         if(isinstance(qq,list)):
             print([str(base(int(x),q)) for x in qq])
         else:
-            print(str(base(int(qq),int(q)))+"\n")
+            print(str(base(int(qq),int(q))))
     elif cc==u"ƥ":
         print(stck.pop())
     elif cc==u"ṗ":
