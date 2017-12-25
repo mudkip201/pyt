@@ -336,10 +336,14 @@ def interpret(cc,stck,i,line):
     elif cc==u"^":
         q=stck.pop()
         qq=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
         if(isinstance(qq,np.ndarray)):
             qq=qq.tolist()
         if(isinstance(qq,list)):
             stck.append(np.power(qq,q))
+        elif(isinstance(q,list)):
+            stck.append([power(qq,x) for x in q])
         else:
             stck.append(math.pow(qq,q))
     elif cc==u"«":
