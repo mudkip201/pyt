@@ -55,7 +55,7 @@ def parse(line, stck):
 
 
 def interpret(cc,stck,i,line):
-    #   print(stck,cc)
+    #print(stck,cc)
     if(cc in string.digits):
         stck.append(int(cc))
         return stck,i
@@ -343,7 +343,7 @@ def interpret(cc,stck,i,line):
         if(isinstance(qq,list)):
             stck.append(np.power(qq,q))
         elif(isinstance(q,list)):
-            stck.append([power(qq,x) for x in q])
+            stck.append([pow(qq,x) for x in q])
         else:
             stck.append(math.pow(qq,q))
     elif cc==u"«":
@@ -354,21 +354,45 @@ def interpret(cc,stck,i,line):
         stck.append(stck.pop()>>q)
     elif cc==u"≤":
         q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()[0]
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist()[0])
         stck.append(stck.pop()<=q)
     elif cc==u"≥":
         q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()[0]
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist()[0])
         stck.append(stck.pop()>=q)
     elif cc==u"<":
         q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()[0]
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist()[0])
         stck.append(stck.pop()<q)
     elif cc==u">":
         q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()[0]
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist()[0])
         stck.append(stck.pop()>q)
     elif cc==u"=":
         q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()[0]
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist()[0])
         stck.append(stck.pop()==q)
     elif cc==u"≠":
         q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()[0]
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist()[0])
         stck.append(stck.pop()!=q)
     elif cc==u"√":
         if(isinstance(stck[-1],np.ndarray)):
@@ -943,7 +967,7 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
-        stck.append(stck.pop()[q])
+        stck.append(stck.pop()[int(q)])
     return stck,i
 
 
