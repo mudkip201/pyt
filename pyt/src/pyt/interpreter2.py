@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`ł"
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`'
 
 
 
@@ -386,7 +386,13 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         stck.append(stck.pop() in q)
     elif cc==u"~":
-        stck.append(-stck.pop())
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([-x for x in q])
+        else:
+            stck.append(-stck.pop())
     elif cc==u"˜": #
         q=stck.pop()
         stck.append(int(2**ceil(log(q,2))-q))
@@ -898,14 +904,6 @@ def interpret(cc,stck,i,line):
             stckk=stck
             stck=[]
             stck.append(all(x==stckk[0] for x in stckk))
-    elif cc==u"_": #Negative of number
-        q=stck.pop()
-        if(isinstance(q,np.ndarray)):
-            q=q.tolist()
-        if(isinstance(q,list)):
-            stck.append([-x for x in q])
-        else:
-            stck.append(-stck.pop())
     elif cc==u"‼": #Double factorial
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
