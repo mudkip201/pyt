@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéḞǤĦĨƖǰḶĻĽĹŁĿļɬɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼"
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéḞǤĦĨƖǰḶĻĽĹŁĿļɬɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`ł"
 
 
 
@@ -30,7 +30,8 @@ from scipy.misc import factorial2
 
 def parse(line, stck):
     l=len(line)
-    for i in range(l):
+    i=0
+    while i in range(l):
         #d=u""
         cc=line[i]
         '''if(cc in u""+string.letters):
@@ -45,13 +46,14 @@ def parse(line, stck):
             stck.append(int(d))
             else:
             stck.append(d)'''
-        stck=interpret(cc,stck)
+        stck,i=interpret(cc,stck,i,line)
+        i+=1
     for j in stck:
         print(j)
     return stck
 
 
-def interpret(cc,stck):
+def interpret(cc,stck,i,line):
     if(cc in string.digits):
         stck.append(int(cc))
     elif cc==u"Σ" or cc==u"Ʃ":
@@ -908,8 +910,10 @@ def interpret(cc,stck):
             stck.append([factorial2(int(x)).tolist() for x in q])
         else:
             stck.append(factorial2(q))
-
-    return stck
+    elif cc==u"ł": #loop to last instance of "`" if top of stack is not 0
+        if(stck[-1]!=0):
+            i=string.rfind(line,"`",0,i)
+    return stck,i
 
     #²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟°|!÷↑↓↕↔¬^«»≤≥<>=≠√∛∜∞∈~˜.%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶Å∀ḄƁÇČƇçč¢ḋ₫ĐéḞƑǤĦḤĨƖĮĻĽĹŁĿļɬɫṀɳỌꝎṔƤǷҎᑭ₽ṕƥṗƿϼҏŘɽɼɾɹʀʁŞŠŜŚşŝšŤŦťŧỤʊŽǂǁΣΠμϺπφ
 
