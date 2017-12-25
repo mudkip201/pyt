@@ -157,7 +157,11 @@ parse(u"7ř‼")
 #parse(u"59`⇹Đ+⇹1-ł+")
 #parse(u"←1ŕ`Ś")
 #parse(u"←1`ŕŚĐ9>łŕ9⇹-")
-parse(u"éǝ")
+#parse(u"éǝ")
+#C>B≥A
+#A -> AB -> ABC -> CBA -> CBA^2 -> CA^2B -> CA^2B^2 -> B^2A^2C -> B^2A^2C^2 C^2A^2B^2
+#parse(u"←←←Ş²⇹²↔²↔+=")
+parse(u"←²ĐƩ2/⇹∈")
 
 
 

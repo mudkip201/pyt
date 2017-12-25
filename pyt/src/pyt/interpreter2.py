@@ -296,7 +296,10 @@ def interpret(cc,stck,i,line):
             qq=float(q)
         except ValueError:
             qq=q
-        stck.append(qq)
+        if(q[0]=='[' and q[-1]==']'):
+            stck.append(eval(q))
+        else:
+            stck.append(qq)
     #stck.append(raw_input())
     elif cc==u"↕":
         if(isinstance(stck[-1],np.ndarray)):
