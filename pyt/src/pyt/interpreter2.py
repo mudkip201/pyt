@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéḞǤĦĨƖǰḶĻĽĹŁĿļɬɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`ł"
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéḞǤĦĨƖǰḶĻĽĹŁĿļɬɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`ł"
 
 
 
@@ -47,14 +47,16 @@ def parse(line, stck):
             else:
             stck.append(d)'''
         stck,i=interpret(cc,stck,i,line)
+        print(stck)
         i+=1
-    for j in stck:
-        print(j)
+    #for j in stck:
+        #print(j)
     return stck
 
 
 def interpret(cc,stck,i,line):
     if(cc in string.digits):
+        print(cc)
         stck.append(int(cc))
     elif cc==u"Σ" or cc==u"Ʃ":
         if(isinstance(stck[-1],np.ndarray)):
@@ -347,6 +349,7 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         stck.append(stck.pop()<q)
     elif cc==u">":
+        print(stck)
         q=stck.pop()
         stck.append(stck.pop()>q)
     elif cc==u"=":
@@ -707,10 +710,10 @@ def interpret(cc,stck,i,line):
     elif cc==u"Ҏ":
         q=stck.pop()
         w=str(int(q))
-        i=1
+        k=1
         for j in w:
-            i*=int(j)
-        stck.append(i)
+            k*=int(j)
+        stck.append(k)
     elif cc==u"ᑭ":
         pass
     elif cc==u"₽":
@@ -794,10 +797,10 @@ def interpret(cc,stck,i,line):
     elif cc==u"Ś":
         q=stck.pop()
         w=str(int(q))
-        i=0
+        k=0
         for j in w:
-            i+=int(j)
-        stck.append(i)
+            k+=int(j)
+        stck.append(k)
     elif cc==u"ş" or cc==u"ş":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist)
@@ -913,7 +916,11 @@ def interpret(cc,stck,i,line):
     elif cc==u"ł": #loop to last instance of "`" if top of stack is not 0
         if(stck[-1]!=0):
             i=string.rfind(line,"`",0,i)
+        print(stck,i)
+    elif cc==u"ŕ": #pop top of stack and do nothing
+        stck.pop()
     return stck,i
+
 
     #²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟°|!÷↑↓↕↔¬^«»≤≥<>=≠√∛∜∞∈~˜.%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶Å∀ḄƁÇČƇçč¢ḋ₫ĐéḞƑǤĦḤĨƖĮĻĽĹŁĿļɬɫṀɳỌꝎṔƤǷҎᑭ₽ṕƥṗƿϼҏŘɽɼɾɹʀʁŞŠŜŚşŝšŤŦťŧỤʊŽǂǁΣΠμϺπφ
 
