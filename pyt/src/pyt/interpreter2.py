@@ -786,6 +786,8 @@ def interpret(cc,stck,i,line):
         stck.append(random.getrandbits(1))
     elif cc==u"ʀ":
         stck.append(random.choice(stck.pop()))
+    elif cc==u"ṛ":
+        stck.append(random.random())
     elif cc==u"ř":
         stck.append(range(1,int(stck.pop())+1))
     elif cc==u"Ş":
