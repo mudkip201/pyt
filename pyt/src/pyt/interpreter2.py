@@ -241,10 +241,15 @@ def interpret(cc,stck,i,line):
     elif cc==u"⅞":
         stck.append(7./8)
     elif cc==u"⅟":
-        stck.append(1./stck.pop())
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist())
+        if(isinstance(stck[-1],list)):
+            stck.append([1./x for x in stck.pop()])
+        else:
+            stck.append(1./stck.pop())
     elif cc==u"Ƨ":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(stck.pop().tolist)
+            stck.append(stck.pop().tolist())
         if(isinstance(stck[-1],list)):
             stck.append(stck.pop()[::2])
         else:
