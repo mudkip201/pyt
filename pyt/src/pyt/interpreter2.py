@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéḞǤĦĨƖǰḶĻĽĹŁĿļɬɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`ł"
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`ł"
 
 
 
@@ -22,7 +22,7 @@ from operator import mul
 from numpy import median, Infinity
 import numpy as np
 from scipy.stats import mode
-from math import factorial, sqrt, pow, floor, ceil, sin, cos, tan, cosh, sinh, tanh, acos, acosh, atan, atanh, asin, asinh, log
+from math import factorial, sqrt, pow, floor, ceil, sin, cos, tan, cosh, sinh, tanh, acos, acosh, atan, atanh, asin, asinh, log, exp
 from itertools import count, islice
 import random
 from scipy.misc import factorial2
@@ -47,16 +47,15 @@ def parse(line, stck):
             else:
             stck.append(d)'''
         stck,i=interpret(cc,stck,i,line)
-        print(stck)
+        #print(stck)
         i+=1
-    #for j in stck:
-        #print(j)
+    for j in stck:
+        print(j)
     return stck
 
 
 def interpret(cc,stck,i,line):
     if(cc in string.digits):
-        print(cc)
         stck.append(int(cc))
     elif cc==u"Σ" or cc==u"Ʃ":
         if(isinstance(stck[-1],np.ndarray)):
@@ -349,7 +348,6 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         stck.append(stck.pop()<q)
     elif cc==u">":
-        print(stck)
         q=stck.pop()
         stck.append(stck.pop()>q)
     elif cc==u"=":
@@ -916,9 +914,16 @@ def interpret(cc,stck,i,line):
     elif cc==u"ł": #loop to last instance of "`" if top of stack is not 0
         if(stck[-1]!=0):
             i=string.rfind(line,"`",0,i)
-        print(stck,i)
     elif cc==u"ŕ": #pop top of stack and do nothing
         stck.pop()
+    elif cc==u"ǝ": #exp(x)
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            stck.append(np.exp(q))
+        elif(isinstance(q,list)):
+            stck.append([exp(x) for x in q])
+        else:
+            stck.append(exp(q))
     return stck,i
 
 
