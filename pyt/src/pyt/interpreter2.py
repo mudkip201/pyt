@@ -935,6 +935,11 @@ def interpret(cc,stck,i,line):
             stck.append([exp(x) for x in q])
         else:
             stck.append(exp(q))
+    elif cc==u"⦋": #Get the xth entry in y
+        q=stck.pop()
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist())
+        stck.append(stck.pop()[q])
     return stck,i
 
 
