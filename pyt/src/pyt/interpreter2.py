@@ -598,6 +598,9 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         qq=list(str(q))
         stck.append([int(x) for x in qq])
+    elif cc==u"á": #put contents of stack in an array
+        stckk=[stck]
+        stck=stckk
     elif cc==u"Ç":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.arccosh(stck.pop()))
