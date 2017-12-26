@@ -55,7 +55,7 @@ def parse(line, stck):
 
 
 def interpret(cc,stck,i,line):
-    #print(stck,cc)
+    print(stck,cc)
     if(cc in string.digits):
         stck.append(int(cc))
         return stck,i
@@ -601,6 +601,10 @@ def interpret(cc,stck,i,line):
     elif cc==u"á": #put contents of stack in an array
         stckk=[stck]
         stck=stckk
+    elif cc==u"ɓ": #convert to binary string (less the 0b)
+        q=stck.pop()
+        qq=bin(q)[2:]
+        stck.append(qq)
     elif cc==u"Ç":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.arccosh(stck.pop()))
