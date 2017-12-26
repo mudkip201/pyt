@@ -512,7 +512,7 @@ def interpret(cc,stck,i,line):
             stck.append((stck.pop()*q).tolist())
         elif(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],list)):
             q=stck.pop()
-            stck.append(np.ndarray(stck.pop())*q)
+            stck.append(np.multiply(np.ndarray(stck.pop()),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-1],list)):
             q=stck.pop()
             stck.append((np.array(stck.pop())*np.array(q)).tolist())
@@ -637,7 +637,7 @@ def interpret(cc,stck,i,line):
             stck.append(cos(stck.pop()))
     elif cc==u"¢":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(stck.pop().tolist)
+            stck.append(stck.pop().tolist())
         if(isinstance(stck[-1],list)):
             stck.append([1-x for x in stck.pop()])
         else:
@@ -665,7 +665,10 @@ def interpret(cc,stck,i,line):
     elif cc==u"é":
         stck.append(2.71828182845904523536028747135266249775724709369995)
     elif cc==u"Ḟ":
-        stck.append(fib(stck.pop()))
+        if(isinstance(stck[-1],list)):
+            stck.append([fib(x) for x in stck.pop()])
+        else:
+            stck.append(fib(stck.pop()))
     elif cc==u"Ǥ":
         stck.append(gcd(stck.pop(),stck.pop()))
     elif cc==u"Ħ":
