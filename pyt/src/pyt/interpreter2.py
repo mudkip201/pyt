@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅÇČƇçč¢ćĆḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅąÇČƇçč¢ćĆḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`'
 
 
 
@@ -594,6 +594,10 @@ def interpret(cc,stck,i,line):
         stck.append(np.transpose([np.tile(y, len(x)), np.repeat(x, len(y))]))
     elif cc==u"Å":
         stck.append(abs(stck.pop()))
+    elif cc==u"ą": #convert number to array of digits
+        q=stck.pop()
+        qq=list(str(q))
+        stck.append([int(x) for x in qq])
     elif cc==u"Ç":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.arccosh(stck.pop()))
