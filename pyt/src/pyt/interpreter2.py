@@ -268,7 +268,21 @@ def interpret(cc,stck,i,line):
             stck.append(ppow(stck.pop(),qq,q))
     elif cc==u"|":
         q=stck.pop()
-        stck.append(stck.pop()%q==0)
+        qq=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        if(isinstance(q,list)):
+            if(isinstance(qq,list)):
+                stck.append([qq[j]%q[j]==0 for j in range(min(len(qq),len(q)))])
+            else:
+                stck.append([qq%x==0 for x in q])
+        else:
+            if(isinstance(qq,list)):
+                stck.append([x%q==0 for x in qq])
+            else:
+                stck.append(qq%q==0)
     elif cc==u"!":
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
@@ -601,7 +615,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.multiply(stck.pop(),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-2],np.ndarray)):
             q=np.array(stck.pop())
-            stck.append(np.multiply((stck.pop(),q)).tolist())
+            stck.append(np.multiply(stck.pop(),q).tolist())
         elif(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],list)):
             q=stck.pop()
             stck.append(np.multiply(np.array(stck.pop()),q))
@@ -1098,7 +1112,7 @@ def interpret(cc,stck,i,line):
             if(isinstance(q,list)):
                 stck.append([factorial(int(qq))/factorial(int(qq)-int(x)) for x in q])
             else:
-                stck.append(factorial(int(q))/factorial(int(q)-int(n)))
+                stck.append(factorial(int(q))/factorial(int(qq)-int(q)))
     elif cc==u"Ř":
         q=list(range(int(stck[-2]),int(stck[-1])+1))
         stck.pop()
