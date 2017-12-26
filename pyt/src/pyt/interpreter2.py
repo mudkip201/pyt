@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅąÇČƇçč¢ćĆḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅąÇČƇçč¢ćĆḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋'
 
 
 
@@ -436,95 +436,87 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop())%q)
+            stck.append(np.mod(np.array(stck.pop()),q))
         else:
             stck.append(stck.pop()%q)
     elif cc==u"/":
         if(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],np.ndarray)):
            q=stck.pop()
-           stck.append(stck.pop()/q)
+           stck.append(np.divide(stck.pop(),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-2],np.ndarray)):
             q=np.array(stck.pop())
-            stck.append((stck.pop()/q).tolist())
+            stck.append(np.divide(stck.pop(),q).tolist())
         elif(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],list)):
             q=stck.pop()
-            stck.append(np.ndarray(stck.pop())/q)
+            stck.append(np.divide(np.ndarray(stck.pop()),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-2],list)):
             q=stck.pop()
-            stck.append(np.array(stck.pop())/np.array(q))
+            stck.append(np.divide(np.array(stck.pop()),np.array(q)))
         else:
             q=float(stck.pop())
             if(isinstance(stck[-1],list)):
-                stck.append(np.array(stck.pop())/q)
-            elif(isinstance(q,list)):
-                stck.append(np.array(q)/stck.pop())
+                stck.append(np.divide(np.array(stck.pop()),q))
             else:
                 stck.append(stck.pop()/q)
     elif cc==u"+":
         if(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],np.ndarray)):
             q=stck.pop()
-            stck.append(stck.pop()+q)
+            stck.append(np.add(stck.pop(),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-2],np.ndarray)):
             q=np.array(stck.pop())
-            stck.append((stck.pop()+q).tolist())
+            stck.append(np.add(stck.pop(),q).tolist())
         elif(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],list)):
             q=stck.pop()
-            stck.append(np.ndarray(stck.pop())+q)
+            stck.append(np.add(np.ndarray(stck.pop()),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-1],list)):
             q=stck.pop()
-            stck.append((np.array(stck.pop())+np.array(q)).tolist())
+            stck.append(np.add(np.array(stck.pop()),np.array(q)).tolist())
         else:
             q=float(stck.pop())
             if(isinstance(stck[-1],list)):
-                stck.append(np.array(stck.pop())+q)
-            elif(isinstance(q,list)):
-                stck.append(np.array(q)+stck.pop())
+                stck.append(np.add(np.array(stck.pop()),q))
             else:
                 stck.append(stck.pop()+q)
 
     elif cc==u"-":
         if(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],np.ndarray)):
             q=stck.pop()
-            stck.append(stck.pop()-q)
+            stck.append(np.subtract(stck.pop(),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-1],list)):
             q=stck.pop()
-            stck.append((np.array(stck.pop())-np.array(q)).tolist())
+            stck.append(np.subtract(np.array(stck.pop()),np.array(q)).tolist())
         elif(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],list)):
             q=stck.pop()
-            stck.append(np.ndarray(stck.pop())-q)
+            stck.append(np.subtract(np.ndarray(stck.pop()),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-2],np.ndarray)):
             q=np.array(stck.pop())
-            stck.append((stck.pop()-q).tolist())
+            stck.append(np.subtract(stck.pop(),q).tolist())
         else:
             q=float(stck.pop())
             if(isinstance(stck[-1],list)):
-                stck.append(np.array(stck.pop())-q)
-            elif(isinstance(q,list)):
-                stck.append(np.array(q)-stck.pop())
+                stck.append(np.subtract(np.array(stck.pop()),q))
             else:
                 stck.append(stck.pop()-q)
     elif cc==u"*":
         if(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],np.ndarray)):
             q=stck.pop()
-            stck.append(stck.pop()*q)
+            stck.append(np.multiply(stck.pop(),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-2],np.ndarray)):
             q=np.array(stck.pop())
-            stck.append((stck.pop()*q).tolist())
+            stck.append(np.multiply((stck.pop(),q)).tolist())
         elif(isinstance(stck[-1],np.ndarray) and isinstance(stck[-2],list)):
             q=stck.pop()
             stck.append(np.multiply(np.ndarray(stck.pop()),q))
         elif(isinstance(stck[-1],list) and isinstance(stck[-1],list)):
             q=stck.pop()
-            stck.append((np.array(stck.pop())*np.array(q)).tolist())
+            stck.append(np.multiply(np.array(stck.pop()),np.array(q)).tolist())
         elif(isinstance(stck[-1],np.ndarray)):
             q=stck.pop()
-            stck.append((q*stck.pop()).tolist)
+            stck.append(np.multiply(q,stck.pop()).tolist)
         else:
             q=float(stck.pop())
             if(isinstance(stck[-1],list)):
-                stck.append(np.array(stck.pop())*q)
-            elif(isinstance(q,list)):
-                stck.append(np.array(q)*stck.pop())
+                stck.append(np.multiply(np.array(stck.pop()),q))
             else:
                 stck.append(stck.pop()*q)
     elif cc==u"△":
