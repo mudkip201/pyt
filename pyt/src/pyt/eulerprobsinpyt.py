@@ -18,7 +18,6 @@ def parse(line):
 #Commenting out all the ones that require input after they're done
 
 
-'''
 parse(u"091+³1-`ĐĐĐ3|⇹5|∨*⇹↔+⇹1-ł+") #1
 parse(u"2⁵řḞĐ2%¢*Ʃ") #2
 #parse(u"←ϼĐŁ1-⦋") #takes the number as input #3
@@ -65,5 +64,19 @@ parse(u"25*²!Ś") #20
 #
 #
 #
-#'''
-parse(u"25*³řĐ25*⁰°Ʃ25*⁰%")
+#
+parse(u"25*³řĐ25*⁰°Ʃ25*⁰%") #48
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
