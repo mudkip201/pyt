@@ -257,9 +257,15 @@ def interpret(cc,stck,i,line):
             stck=[]
             stck=stckk[::2]
     elif cc==u"°":
-        q=stck.pop()
-        qq=stck.pop()
-        stck.append(ppow(stck.pop(),qq,q))
+        if(isinstance(stck[-2],list) and isinstance(stck[-3],list)):
+            q=int(stck.pop())
+            qq=stck.pop()
+            qqq=stck.pop()
+            stck.append([ppow(qqq[o],qq[o],q) for o in range(len(qq))])
+        else:
+            q=stck.pop()
+            qq=stck.pop()
+            stck.append(ppow(stck.pop(),qq,q))
     elif cc==u"|":
         q=stck.pop()
         stck.append(stck.pop()%q==0)
