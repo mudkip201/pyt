@@ -861,6 +861,14 @@ def interpret(cc,stck,i,line):
     elif cc==u"₫":
         q=(""+str(int(stck.pop())))[::-1]
         stck.append(int(q))
+    elif cc==u"ð":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([divisors(x) for x in q])
+        else:
+            stck.append(divisors(q))
     elif cc==u"Đ": #duplicate item on top of stack
         q=stck.pop()
         stck+=[q,q]
@@ -1379,3 +1387,13 @@ def readasbase(st,bb):
             i+=ord(c)-61
         st=st[1:]
     return i
+
+def divisors(n):
+    i=1
+    divs=[]
+    while(i<=n/2):
+        if(n%i==0):
+            divs.append(i)
+            divs.append(n/i)
+        i+=1
+    return sorted(divs)
