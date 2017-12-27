@@ -1083,7 +1083,7 @@ def interpret(cc,stck,i,line):
             else:
                 q=int(q)
                 qq=int(qq)
-                stck.append(1./2*qq*((q-2)*qq-(q-4))))
+                stck.append(1./2*qq*((q-2)*qq-(q-4)))
     elif cc==u"₽":
         q=stck.pop()
         stck.append(str(q)==str(q)[::-1])
