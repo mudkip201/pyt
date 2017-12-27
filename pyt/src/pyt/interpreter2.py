@@ -584,7 +584,7 @@ def interpret(cc,stck,i,line):
             q=stck.pop()
             stck.append(np.add(np.array(stck.pop()),np.array(q)).tolist())
         else:
-            q=float(stck.pop())
+            q=stck.pop()
             if(isinstance(stck[-1],list)):
                 stck.append(np.add(np.array(stck.pop()),q))
             else:
@@ -604,7 +604,7 @@ def interpret(cc,stck,i,line):
             q=np.array(stck.pop())
             stck.append(np.subtract(stck.pop(),q).tolist())
         else:
-            q=float(stck.pop())
+            q=stck.pop()
             if(isinstance(stck[-1],list)):
                 stck.append(np.subtract(np.array(stck.pop()),q))
             else:
@@ -626,7 +626,7 @@ def interpret(cc,stck,i,line):
             q=stck.pop()
             stck.append(np.multiply(q,stck.pop()).tolist())
         else:
-            q=float(stck.pop())
+            q=stck.pop()
             if(isinstance(stck[-1],list)):
                 stck.append(np.multiply(np.array(stck.pop()),q))
             else:
