@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊼⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋'
 
 
 
@@ -723,6 +723,40 @@ def interpret(cc,stck,i,line):
                 stck.append([not(qq or x) for x in q])
             else:
                 stck.append(not(qq or q))
+    elif cc==u"⊻": #XOR
+        q=stck.pop()
+        qq=stck.pop()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(qq,list)):
+            if(isinstance(q,list)):
+                stck.append([(qq[j] and not q[j]) or (not qq[j] and q[j]) for j in range(min(len(q),len(qq)))])
+            else:
+                stck.append([(x and not q) or (not x and q) for x in qq])
+        else:
+            if(isinstance(q,list)):
+                stck.append([(qq and not x) or (not qq and x) for x in q])
+            else:
+                stck.append((qq and not q) or (q and not qq))
+    elif cc==u"⊼": #XNOR
+        q=stck.pop()
+        qq=stck.pop()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(qq,list)):
+            if(isinstance(q,list)):
+                stck.append([(qq[j] and q[j]) or not(qq[j] or q[j]) for j in range(min(len(q),len(qq)))])
+            else:
+                stck.append([(x and q) or not(x or q) for x in qq])
+        else:
+            if(isinstance(q,list)):
+                stck.append([(qq and x) or not(qq or x) for x in q])
+            else:
+                stck.append((qq and q) or not(qq or q))
     elif cc==u"⌊":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.floor(stck.pop()))
