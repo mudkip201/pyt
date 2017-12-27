@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋⁺⁻'
 
 
 
@@ -1362,6 +1362,22 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
         stck.append(stck.pop()[int(q)])
+    elif cc==u"⁺":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            stck.append(np.add(q,1))
+        elif(isinstance(q,list)):
+            stck.append([x+1 for x in q])
+        else:
+            stck.append(q+1)
+    elif cc==u"⁻":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            stck.append(np.subtract(q,1))
+        elif(isinstance(q,list)):
+            stck.append([x-1 for x in q])
+        else:
+            stck.append(q-1)
     return stck,i
 
 
