@@ -1063,8 +1063,27 @@ def interpret(cc,stck,i,line):
         for j in w:
             k*=int(j)
         stck.append(k)
-    elif cc==u"ᑭ":
-        pass
+    elif cc==u"ᑭ": #Polygonal number
+        q=stck.pop()
+        qq=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        if(isinstance(qq,list)):
+            if(isinstance(q,list)):
+                stck.append([1./2*int(qq[j])*((int(q[j])-2)*int(qq[j])-(int(q[j])-4)) for j in range(min(len(qq),len(q)))])
+            else:
+                q=int(q)
+                stck.append([1./2*int(x)*((q-2)*int(x)-(q-4)) for x in qq])
+        else:
+            if(isinstance(q,list)):
+                qq=int(qq)
+                stck.append([1./2*qq*((int(x)-2)*qq-(int(x)-4)) for x in q])
+            else:
+                q=int(q)
+                qq=int(qq)
+                stck.append(1./2*qq*((q-2)*qq-(q-4))))
     elif cc==u"₽":
         q=stck.pop()
         stck.append(str(q)==str(q)[::-1])
