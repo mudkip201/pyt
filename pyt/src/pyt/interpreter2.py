@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅąÇČƇçč¢ćĆḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋'
 
 
 
@@ -856,6 +856,8 @@ def interpret(cc,stck,i,line):
             stck.append([factorial(2*x)/(factorial(x+1)*factorial(x)) for x in n])
         else:
             stck.append(factorial(2*n)/(factorial(n+1)*factorial(n)))
+    elif cc==u"ĉ":
+        stck=[]
     elif cc==u"ḋ":
         stck.append(primeFactors(stck.pop()))
     elif cc==u"₫":
@@ -866,9 +868,9 @@ def interpret(cc,stck,i,line):
         if(isinstance(q,np.ndarray)):
             q=q.tolist()
         if(isinstance(q,list)):
-            stck.append([divisors(x) for x in q])
+            stck.append([divisors(int(x)) for x in q])
         else:
-            stck.append(divisors(q))
+            stck.append(divisors(int(q)))
     elif cc==u"Đ": #duplicate item on top of stack
         q=stck.pop()
         stck+=[q,q]
@@ -1245,9 +1247,9 @@ def interpret(cc,stck,i,line):
         qqq=stck.pop()
         qq=zip(stck.pop(),qqq)
         q=[]
-        for i in range(len(qq)):
-            q.append(qq[i][0])
-            q.append(qq[i][1])
+        for j in range(len(qq)):
+            q.append(qq[j][0])
+            q.append(qq[j][1])
         stck.append(q)
     elif cc==u"π":
         stck.append(math.pi)
@@ -1396,4 +1398,4 @@ def divisors(n):
             divs.append(i)
             divs.append(n/i)
         i+=1
-    return sorted(divs)
+    return sorted(getUnique(divs))
