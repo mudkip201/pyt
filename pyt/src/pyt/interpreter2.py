@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽ṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋'
 
 
 
@@ -1010,6 +1010,23 @@ def interpret(cc,stck,i,line):
         stck.append("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")
     elif cc==u"ɫ":
         stck.append("abcdefghijklmnopqrstuvwxyz")
+    elif cc==u"ɯ": #modular inverse
+        q=stck.pop()
+        qq=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        if(isinstance(qq,list)):
+            if(isinstance(q,list)):
+                stck.append([mulinv(int(qq[j]),int(q[j])) for j in range(min(len(qq),len(q)))])
+            else:
+                stck.append([mulinv(int(x),int(q)) for x in qq])
+        else:
+            if(isinstance(q,list)):
+                stck.append([mulinv(int(qq),int(x)) for x in q])
+            else:
+                stck.append(mulinv(int(qq),int(q)))
     elif cc==u"ɳ":
         stck.append("0123456789")
     elif cc==u"Ṕ":
@@ -1399,3 +1416,17 @@ def divisors(n):
             divs.append(n/i)
         i+=1
     return sorted(getUnique(divs))
+
+
+def egcd(b,n):
+    x0,x1,y0,y1=1, 0, 0, 1
+    while n!=0:
+        q, b, n = b//n, n, b%n
+        x0, x1 = x1, x0-q*x1
+        y0, y1 = y1, y0-q*y1
+    return b,x0,y0
+
+def mulinv(b,n):
+    g, x, _ = egcd(b,n)
+    if g==1:
+        return x%n
