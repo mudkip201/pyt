@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽Ṗṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋⁺⁻'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉɔðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽Ṗṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋⁺⁻'
 
 
 
@@ -26,6 +26,7 @@ from math import factorial, sqrt, pow, floor, ceil, sin, cos, tan, cosh, sinh, t
 from itertools import count, islice
 import random
 from scipy.misc import factorial2
+from collections import Counter
 
 
 def parse(line, stck):
@@ -892,6 +893,18 @@ def interpret(cc,stck,i,line):
             stck.append(factorial(2*n)/(factorial(n+1)*factorial(n)))
     elif cc==u"ĉ":
         stck=[]
+    elif cc==u"ɔ": #count occurrences of x in y
+        q=stck.pop()
+        qq=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(qq,np.ndarray)):
+            qq=qq.tolist()
+        qqq=Counter(q)
+        if(isinstance(q,list)):
+            stck.append([qqq[x] for x in qq])
+        else:
+            stck.append(qqq[qq])
     elif cc==u"ḋ":
         stck.append(primeFactors(stck.pop()))
     elif cc==u"₫":
