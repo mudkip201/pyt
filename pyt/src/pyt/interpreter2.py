@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉɔðḋ₫ĐéǝḞǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽Ṗṕƥṗƿϼҏ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋⁺⁻'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉɔðḋ₫ĐéǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽Ṗṕƥṗƿϼҏᵱ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋⁺⁻'
 
 
 
@@ -930,6 +930,14 @@ def interpret(cc,stck,i,line):
             stck.append([fib(x) for x in stck.pop()])
         else:
             stck.append(fib(stck.pop()))
+    elif cc==u"ᵮ":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([float(x) for x in q])
+        else:
+            stck.append(float(q))
     elif cc==u"Ǥ":
         q=stck.pop()
         qq=stck.pop()
@@ -974,6 +982,13 @@ def interpret(cc,stck,i,line):
                 stck.append([readasbase(str(qq),int(x)) for x in q])
             else:
                 stck.append(readasbase(str(qq),int(q)))
+    elif cc==u"Ɩ":
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().tolist())
+        if(isinstance(stck[-1],list)):
+            stck.append([int(x) for x in stck.pop()])
+        else:
+            stck.append(int(stck.pop()))
     elif cc==u"ǰ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
@@ -983,13 +998,6 @@ def interpret(cc,stck,i,line):
             stckk=stck
             stck=[]
             stck.append(str(stckk).replace('[','').replace(']','').replace(',',''))
-    elif cc==u"Ɩ":
-        if(isinstance(stck[-1],np.ndarray)):
-            stck.append(stck.pop().tolist())
-        if(isinstance(stck[-1],list)):
-            stck.append([int(x) for x in stck.pop()])
-        else:
-            stck.append(int(stck.pop()))
     elif cc==u"Ḷ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.log10(stck.pop()))
@@ -1197,6 +1205,14 @@ def interpret(cc,stck,i,line):
         else:
             stckk=stck
             stck=stckk+stckk[::-1]
+    elif cc==u"ᵱ":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([len(accel_asc(int(x))) for x in q])
+        else:
+            stck.append([len(accel_asc(int(q)))])
     elif cc==u"₱":
         q=stck.pop()
         qq=stck.pop()
@@ -1520,3 +1536,30 @@ def mulinv(b,n):
     g, x, _ = egcd(b,n)
     if g==1:
         return x%n
+
+
+def accel_asc(n):
+    return set(accel_asc_yield(n))
+
+
+def accel_asc_yield(n):
+    a = [0 for i in range(n + 1)]
+    k = 1
+    y = n - 1
+    while k != 0:
+        x = a[k - 1] + 1
+        k -= 1
+        while 2 * x <= y:
+            a[k] = x
+            y -= x
+            k += 1
+        l = k + 1
+        while x <= y:
+            a[k] = x
+            a[l] = y
+            yield tuple(a[:k + 2])
+            x += 1
+            y -= 1
+        a[k] = x + y
+        y = x + y - 1
+        yield tuple(a[:k + 1])
