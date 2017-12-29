@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉɔðḋ₫ĐéǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽Ṗṕƥṗƿϼҏᵱ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋⁺⁻'
+# Codepage: 'ƩΠµṀϺ²³¹⁰⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąÇČƇçč¢ćĆĉɔðḋ₫ĐéǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫɯɳṔƤǷҎᑭ₽Ṗṕƥṗƿϼҏᵱ₱ŘɽɾɹʀřŕŞŠŜŚşŝšȘŤŦťŧỤʊŽπφ≡_‼`⦋⁺⁻0123456789'
 
 
 
@@ -322,6 +322,8 @@ def interpret(cc,stck,i,line):
         q=raw_input()
         try:
             qq=float(q)
+            if("." not in q):
+                qq=int(qq)
         except ValueError:
             qq=q
         if(q[0]=='[' and q[-1]==']'):
@@ -366,7 +368,10 @@ def interpret(cc,stck,i,line):
         elif(isinstance(q,list)):
             stck.append([pow(qq,x) for x in q])
         else:
-            stck.append(math.pow(qq,q))
+            if(q==int(q) and qq==int(qq)):
+                stck.append(int(math.pow(qq,q)))
+            else:
+                stck.append(math.pow(qq,q))
     elif cc==u"«":
         q=stck.pop()
         qq=stck.pop()
