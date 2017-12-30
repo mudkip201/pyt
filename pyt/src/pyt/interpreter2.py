@@ -813,6 +813,12 @@ def interpret(cc,stck,i,line):
             stck.append([abs(x) for x in q])
         else:
             stck.append(abs(q))
+    elif cc==u"Ą":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        for x in q:
+            stck.append(x)
     elif cc==u"ą": #convert number to array of digits
         q=stck.pop()
         qq=list(str(q))
@@ -1437,7 +1443,6 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         qq=stck.pop()
         stck.append(np.dot(np.array(q),np.array(qq)))
-
     return stck,i
 
 
