@@ -1371,6 +1371,9 @@ def interpret(cc,stck,i,line):
             q.append(qq[j][0])
             q.append(qq[j][1])
         stck.append(q)
+    elif cc==u"ž": #Remove zeroes from list
+        q=stck.pop()
+        stck.append([x for x in q if x!=0])
     elif cc==u"π":
         stck.append(math.pi)
     elif cc==u"φ":
