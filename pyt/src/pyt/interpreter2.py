@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąáɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ṕƥṗƿϼҏᵱŘɽɾɹʀřŕŞŠŜŚȘşŝšŤŦťŧỤʊŽµΠπƩφ≡_‼`⦋⁺⁻0123456789'
+# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅąáɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ṕƥṗƿϼҏᵱŘɽɾɹʀřŕŞŠŜŚȘşŝšŤŦȚťŧỤʊŽµΠπƩφ≡_‼`⦋⁺⁻0123456789'
 
 
 
@@ -1330,6 +1330,14 @@ def interpret(cc,stck,i,line):
             stck.append([atanh(x) for x in stck.pop()])
         else:
             stck.append(atanh(stck.pop()))
+    elif cc==u"Ț":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([eulertot(int(x)) for x in q])
+        else:
+            stck.append(eulertot(int(q)))
     elif cc==u"ť":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.tan(stck.pop()))
@@ -1565,3 +1573,9 @@ def accel_asc_yield(n):
         a[k] = x + y
         y = x + y - 1
         yield tuple(a[:k + 1])
+
+def eulertot(n):
+    y=n
+    for i in getUnique(primeFactors(n)):
+        y-=y/i
+    return int(y)
