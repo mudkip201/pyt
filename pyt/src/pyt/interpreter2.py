@@ -1439,6 +1439,8 @@ def isPrime(n):
 
 def primeFactors(n):
     """Returns all the prime factors of a positive integer"""
+    if(n==1):
+        return [1]
     factors=[]
     d=2
     while n>1:
