@@ -2,10 +2,7 @@
 
 '''
     Created on Aug 11, 2017
-    
-    @author: matthewcowen-green
-    
-    
+      
     STACK-BASED LANGUAGE
     '''
 
