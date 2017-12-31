@@ -805,7 +805,7 @@ def interpret(cc,stck,i,line):
         x=stck.pop()
         y=stck.pop()
         stck.append(np.transpose([np.tile(y, len(x)), np.repeat(x, len(y))]))
-    elif cc==u"Å":
+    elif cc==u"Å" or cc==u"Å":
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
             stck.append(np.absolute(q))
@@ -912,7 +912,7 @@ def interpret(cc,stck,i,line):
         if(isinstance(qq,np.ndarray)):
             qq=qq.tolist()
         qqq=Counter(q)
-        if(isinstance(q,list)):
+        if(isinstance(qq,list)):
             stck.append([qqq[x] for x in qq])
         else:
             stck.append(qqq[qq])
@@ -1004,11 +1004,11 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
         if(isinstance(stck[-1],list)):
-            stck.append(str(stck.pop()).replace('[','').replace(']','').replace(',',''))
+            stck.append(str(stck.pop()).replace('[','').replace(']','').replace(',','').replace('\' u\'',''))
         else:
             stckk=stck
             stck=[]
-            stck.append(str(stckk).replace('[','').replace(']','').replace(',',''))
+            stck.append(str(stckk).replace('[','').replace(']','').replace(',','').replace('\' u\'',''))
     elif cc==u"Ḷ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.log10(stck.pop()))
@@ -1448,12 +1448,12 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
             q=q.tolist()
-        stck.append([j-i for i, j in zip(q[:-1], q[1:])])
+        stck.append([j-k for k, j in zip(q[:-1], q[1:])])
     elif cc==u"₊":
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
             q=q.tolist()
-        stck.append([j+i for i, j in zip(q[:-1], q[1:])])
+        stck.append([j+k for k, j in zip(q[:-1], q[1:])])
     elif cc==u"⑴":
         stck.append([1 for i in range(int(stck.pop()))])
     elif cc==u"·": #Dot product
