@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ṕƥṗƿϼҏᵱŘɽɾɹʀřŕŞŠŜŚȘşŝšŤŦȚťŧỤʊŽžµΠπƩφ≡_‼`⦋⁺⁻0123456789⑴·'
+# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕŞŠŜŚȘşŝšŤŦȚťŧỤʊŽžµΠπƩφ≡_‼`⦋⁺⁻₊₋0123456789⑴·'
 
 
 
@@ -23,7 +23,7 @@ from numpy import median, Infinity
 import numpy as np
 from scipy.stats import mode
 from math import factorial, sqrt, pow, floor, ceil, sin, cos, tan, cosh, sinh, tanh, acos, acosh, atan, atanh, asin, asinh, log, exp
-from itertools import count, islice
+from itertools import count, islice, permutations
 import random
 from scipy.misc import factorial2
 from collections import Counter
@@ -1161,6 +1161,13 @@ def interpret(cc,stck,i,line):
             stck.append([pow(x,x) for x in q])
         else:
             stck.append(pow(q,q))
+    elif cc==u"ᒆ": #enumerates all partitions
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        qq=list(permutations(q))
+        for x in qq:
+            stck.append(list(x))
     elif cc==u"ṕ":
         q=stck.pop()
         qq=stck.pop()
@@ -1437,6 +1444,16 @@ def interpret(cc,stck,i,line):
             stck.append([x-1 for x in q])
         else:
             stck.append(q-1)
+    elif cc==u"₋":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        stck.append([j-i for i, j in zip(q[:-1], q[1:])])
+    elif cc==u"₊":
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        stck.append([j+i for i, j in zip(q[:-1], q[1:])])
     elif cc==u"⑴":
         stck.append([1 for i in range(int(stck.pop()))])
     elif cc==u"·": #Dot product
