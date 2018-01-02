@@ -369,7 +369,7 @@ def interpret(cc,stck,i,line):
             stck.append([pow(qq,x) for x in q])
         else:
             if(q==int(q) and qq==int(qq)):
-                stck.append(int(math.pow(qq,q)))
+                stck.append(qq**q)
             else:
                 stck.append(math.pow(qq,q))
     elif cc==u"«":
