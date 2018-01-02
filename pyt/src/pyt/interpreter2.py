@@ -51,7 +51,7 @@ def parse(line, stck):
         stck,i=interpret(cc,stck,i,line)
         i+=1
     for j in stck:
-        print(j)
+        print(unicode(j))
     return stck
 
 
@@ -1104,16 +1104,16 @@ def interpret(cc,stck,i,line):
             qq=qq.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                print([str(base(int(qq[j]),int(q[j]))) for j in range(min(len(qq),len(q)))]+"\n")
+                print([unicode(base(int(qq[j]),int(q[j]))) for j in range(min(len(qq),len(q)))]+"\n")
             else:
-                print([str(base(int(x),int(q))) for x in qq ]+"\n")
+                print([unicode(base(int(x),int(q))) for x in qq ]+"\n")
         else:
             if(isinstance(q,list)):
-                print([str(base(int(qq),int(x))) for x in q]+"\n")
+                print([unicode(base(int(qq),int(x))) for x in q]+"\n")
             else:
-                print(str(base(int(qq),int(q)))+"\n")
+                print(unicode(base(int(qq),int(q)))+"\n")
     elif cc==u"Ƥ":
-        print(str(stck.pop())+"\n")
+        print(unicode(stck.pop())+"\n")
     elif cc==u"Ƿ":
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
@@ -1177,16 +1177,16 @@ def interpret(cc,stck,i,line):
             qq=qq.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                print([str(base(int(qq[j]),int(q[j]))) for j in range(min(len(qq),len(q)))])
+                print([unicode(base(int(qq[j]),int(q[j]))) for j in range(min(len(qq),len(q)))])
             else:
-                print([str(base(int(x),int(q))) for x in qq ])
+                print([unicode(base(int(x),int(q))) for x in qq ])
         else:
             if(isinstance(q,list)):
-                print([str(base(int(qq),int(x))) for x in q])
+                print([unicode(base(int(qq),int(x))) for x in q])
             else:
-                print(str(base(int(qq),int(q))))
+                print(unicode(base(int(qq),int(q))))
     elif cc==u"ƥ":
-        print(stck.pop())
+        print(unicode(stck.pop()))
     elif cc==u"ṗ":
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
