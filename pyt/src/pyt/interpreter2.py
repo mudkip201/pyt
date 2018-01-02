@@ -16,13 +16,12 @@
 
 import string
 import math
-from __builtin__ import  pow as ppow
 
 from operator import mul
 from numpy import median, Infinity
 import numpy as np
 from scipy.stats import mode
-from math import factorial, sqrt, pow, floor, ceil, sin, cos, tan, cosh, sinh, tanh, acos, acosh, atan, atanh, asin, asinh, log, exp
+from math import factorial, sqrt, floor, ceil, sin, cos, tan, cosh, sinh, tanh, acos, acosh, atan, atanh, asin, asinh, log, exp
 from itertools import count, islice, permutations
 import random
 from scipy.misc import factorial2
@@ -262,11 +261,11 @@ def interpret(cc,stck,i,line):
             q=int(stck.pop())
             qq=stck.pop()
             qqq=stck.pop()
-            stck.append([ppow(qqq[o],qq[o],q) for o in range(len(qq))])
+            stck.append([pow(qqq[o],qq[o],q) for o in range(len(qq))])
         else:
             q=stck.pop()
             qq=stck.pop()
-            stck.append(ppow(stck.pop(),qq,q))
+            stck.append(pow(stck.pop(),qq,q))
     elif cc==u"|":
         q=stck.pop()
         qq=stck.pop()
@@ -319,7 +318,7 @@ def interpret(cc,stck,i,line):
             stck=[]
             stck.append(min(stckk))
     elif cc==u"←":
-        q=raw_input()
+        q=raw_input().decode('utf-8')
         try:
             qq=float(q)
             if("." not in q):
@@ -537,9 +536,9 @@ def interpret(cc,stck,i,line):
     elif cc==u"˜": #unsigned two's-complement
         q=stck.pop()
         if(isinstance(q,list)):
-            stck.append([int(2**ceil(log(x,2))-x) for x in q])
+            stck.append([2**x.bit_length()-x for x in q])
         else:
-            stck.append(int(2**ceil(log(q,2))-q))
+            stck.append(2**q.bit_length()-q)
     elif cc==u"%":
         q=stck.pop()
         qq=stck.pop()
@@ -983,16 +982,16 @@ def interpret(cc,stck,i,line):
             qq=qq.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                stck.append([readasbase(str(int(qq[j])),int(q[j])) for j in range(min(len(qq),len(q)))])
+                stck.append([readasbase(unicode(int(qq[j])),int(q[j])) for j in range(min(len(qq),len(q)))])
             else:
-                stck.append([readasbase(str(int(x)),int(q)) for x in qq ])
+                stck.append([readasbase(unicode(int(x)),int(q)) for x in qq ])
         else:
             if(isinstance(qq,float)):
                 qq=int(qq)
             if(isinstance(q,list)):
-                stck.append([readasbase(str(qq),int(x)) for x in q])
+                stck.append([readasbase(unicode(qq),int(x)) for x in q])
             else:
-                stck.append(readasbase(str(qq),int(q)))
+                stck.append(readasbase(unicode(qq),int(q)))
     elif cc==u"Ɩ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
@@ -1152,7 +1151,7 @@ def interpret(cc,stck,i,line):
                 stck.append(1./2*qq*((q-2)*qq-(q-4)))
     elif cc==u"₽":
         q=stck.pop()
-        stck.append(str(q)==str(q)[::-1])
+        stck.append(unicode(q)==unicode(q)[::-1])
     elif cc==u"Ṗ":
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
@@ -1217,7 +1216,7 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],list)):
             q=stck.pop()
             stck.append(q+q[::-1])
-        elif(isinstance(stck[-1],str)):
+        elif(isinstance(stck[-1],str) or isinstance(stck[-1],unicode)):
             q=stck.pop()
             stck.append(q+q[::-1])
         else:
@@ -1544,7 +1543,7 @@ def gcd(aa,bb):
         aa=t
     return aa
 
-def readasbase(st,bb):
+'''def readasbase(st,bb):
     i=0
     while(st!=""):
         i*=bb
@@ -1555,6 +1554,17 @@ def readasbase(st,bb):
             i+=ord(c)-55
         elif(c in 'abcdefghijklmnopqrstuvwxyz'):
             i+=ord(c)-61
+        st=st[1:]
+    return i'''
+def readasbase(st,bb):
+    digits=u"0123456789ABCDEFGHIJKLMNPOQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`-=[]\\;\',./~!@#$%^&*()_+{}|:\"<>?ĀĒḠĪŌS̄ŪǕȲĂĔĬŎŬÇḐȨĢḨĶĻŅŖŞŢÁĆÉǴÍḰĹḾŃÓṔŔŚÚǗẂÝŹḚḬṴḘṶḆḎH̱ḴḺṈṞṮẔƠƯŐŰÅŮĐǤĦƗŁƟŦƵĄĘĮǪŲÃẼĨÑÕŨṼỸØȘȚŒȂȆȊȎȒȖÞÄËḦÏÖT̈ÜẄẌŸǍČĎĚǦȞǏJ̌ǨĽŇǑŘŠŤǓǙŽȦĊḊĖḞĠḢİṀṄȮṖṘṠṪẆẊẎŻẠḄḌẸḤỊḲḶṂṆỌṚṢṬỤṾẈỴẒȀȄȈȌȐȔẢẺỈỎỦỶÀÈÌǸÒÙǛỲÂĈÊĜĤÎĴÔŜÛŴŶẐƏƆƎƔǶȠƜŊƢƦƱǷȜƷƧƐƼƄȢƁƇƊƑƓƖƘƝƤƮƩƬƲƳȤÆāēḡīōūǖȳăĕĭŏŭçḑȩģḩķļņŗşţáćéǵíḱĺḿńóṕŕśúǘẃýźḛḭṵḙṷḇḏẖḵḻṉṟṯẕơưőűåůẙƀđǥħɨłɵŧʉƶąęįǫųãẽĩñõũṽỹøșțœȃȇȋȏȓȗþäëḧïöẗüẅẍÿǎčďěǧȟǐǰǩľňǒřšťǔǚžȧḃċḋėḟġḣıṁṅȯṗṙṡṫẇẋẏżạḅḍẹḥịḳḷṃṇọṛṣṭụṿẉỵẓȁȅȉȍȑȕảẻỉỏủỷàèìǹòùǜẁỳâĉêĝĥîĵôŝûŵŷẑɔǝɣƕƞĸɯŋƣʀſʊʌƿȝʒƨɛƽƅ⁊ȣɓƈɗƒɠɦɩƙɲƥʠʈʃƭʋɖƴȥæ"
+    i=0
+    while(st!=u""):
+        i*=bb
+        c=st[0]
+        p=digits.find(c)
+        if(p!=-1):
+            i+=p
         st=st[1:]
     return i
 
