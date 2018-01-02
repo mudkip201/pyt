@@ -1004,11 +1004,11 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
         if(isinstance(stck[-1],list)):
-            stck.append(str(stck.pop()).replace('[','').replace(']','').replace(',','').replace('\' u\'',''))
+            stck.append("".join(stck.pop()))
         else:
             stckk=stck
             stck=[]
-            stck.append(str(stckk).replace('[','').replace(']','').replace(',','').replace('\' u\'',''))
+            stck.append("".join(stckk))
     elif cc==u"Ḷ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.log10(stck.pop()))
