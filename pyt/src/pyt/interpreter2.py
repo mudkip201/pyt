@@ -1454,7 +1454,7 @@ def interpret(cc,stck,i,line):
             q=q.tolist()
         stck.append([j+k for k, j in zip(q[:-1], q[1:])])
     elif cc==u"⑴":
-        stck.append([1 for i in range(int(stck.pop()))])
+        stck.append([1 for j in range(int(stck.pop()))])
     elif cc==u"·": #Dot product
         q=stck.pop()
         qq=stck.pop()
