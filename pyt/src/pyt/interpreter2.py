@@ -83,11 +83,11 @@ def interpret(cc,stck,i,line):
             stck.append(stck.pop().mean())
         elif(isinstance(stck[-1],list)):
             q=stck.pop()
-            stck.append(sum(q)/len(q))
+            stck.append(sum(q)*1./len(q))
         else:
             stckk=stck
             stck=[]
-            stck.append(sum(stckk)/len(stckk))
+            stck.append(sum(stckk)*1./len(stckk))
     elif cc==u"Ṁ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.median(stck.pop()))
