@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·'
+# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝᴇḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·'
 
 
 
@@ -50,7 +50,7 @@ def parse(line, stck):
         stck,i=interpret(cc,stck,i,line)
         i+=1
     for j in stck:
-        print(unicode(j))
+        print(j)
     return stck
 
 
@@ -933,6 +933,14 @@ def interpret(cc,stck,i,line):
         stck+=[q,q]
     elif cc==u"é":
         stck.append(2.71828182845904523536028747135266249775724709369995)
+    elif cc==u"ᴇ":
+        q=q.tolist()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([pow(10,x) for x in q])
+        else:
+            stck.append(pow(10,q))
     elif cc==u"Ḟ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
@@ -1003,11 +1011,11 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
         if(isinstance(stck[-1],list)):
-            stck.append("".join(stck.pop()))
+            stck.append(u"".join(stck.pop()))
         else:
             stckk=stck
             stck=[]
-            stck.append("".join(stckk))
+            stck.append(u"".join(stckk))
     elif cc==u"Ḷ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.log10(stck.pop()))
