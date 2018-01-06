@@ -451,7 +451,7 @@ def interpret(cc,stck,i,line):
             if(isinstance(qq,list)):
                 stck.append([qq[j]>q[j] for j in range(min(len(qq),len(q)))])
             else:
-                stck.append([q>x for x in q])
+                stck.append([qq>x for x in q])
         else:
             if(isinstance(qq,list)):
                 stck.append([x>q for x in qq])
