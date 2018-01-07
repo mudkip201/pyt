@@ -934,7 +934,7 @@ def interpret(cc,stck,i,line):
     elif cc==u"é":
         stck.append(2.71828182845904523536028747135266249775724709369995)
     elif cc==u"ᴇ":
-        q=q.tolist()
+        q=stck.pop()
         if(isinstance(q,np.ndarray)):
             q=q.tolist()
         if(isinstance(q,list)):
