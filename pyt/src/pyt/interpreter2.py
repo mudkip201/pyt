@@ -354,7 +354,13 @@ def interpret(cc,stck,i,line):
         stck.append(q)
         stck.append(qq)
     elif cc==u"¬":
-        stck.append(not stck.pop())
+        q=stck.pop()
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append([not x for x in q])
+        else:
+            stck.append(not stck.pop())
     elif cc==u"^":
         q=stck.pop()
         qq=stck.pop()
