@@ -402,7 +402,7 @@ def interpret(cc,stck,i,line):
         if(isinstance(q,list)):
             stck.append([not x for x in q])
         else:
-            stck.append(not stck.pop())
+            stck.append(not q)
     elif cc==u"^":
         q=stck.pop()
         qq=stck.pop()
