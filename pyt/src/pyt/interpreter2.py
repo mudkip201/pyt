@@ -55,7 +55,7 @@ def parse(line, stck):
 
 
 def interpret(cc,stck,i,line):
-    #print(stck,cc)
+    #print(stck,cc,i)
     if(cc in string.digits):
         stck.append(int(cc))
         return stck,i
@@ -1533,8 +1533,12 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         qq=stck.pop()
         stck.append(np.dot(np.array(q),np.array(qq)))
+    elif cc==u"?":
+        if(stck[-1]==0):
+            i=string.find(line,":",i)
+    elif cc==u":":
+        i=string.find(line,";",i)
     return stck,i
-
 
 
 def isPrime(n):
