@@ -1056,9 +1056,9 @@ def interpret(cc,stck,i,line):
             qq=qq.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                stck.append([readasbase(unicode(int(qq[j])),int(q[j])) for j in range(min(len(qq),len(q)))])
+                stck.append([readasbase(unicode(qq[j]),int(q[j])) for j in range(min(len(qq),len(q)))])
             else:
-                stck.append([readasbase(unicode(int(x)),int(q)) for x in qq ])
+                stck.append([readasbase(unicode(x),int(q)) for x in qq ])
         else:
             if(isinstance(qq,float)):
                 qq=int(qq)
