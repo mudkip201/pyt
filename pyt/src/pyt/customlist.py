@@ -42,9 +42,9 @@ class customlist(Sequence):
                 except ValueError:
                     qq=q
                 if(q[0]=='[' and q[-1]==']'):
-                    return eval(q)
-                else:
-                    return qq
+                    qq=eval(q)
+                self.data.append(qq)
+                return qq
             else:
                 return self.data[index]
         elif isinstance(index, slice):
