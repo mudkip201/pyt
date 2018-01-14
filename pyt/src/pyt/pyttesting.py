@@ -6,11 +6,12 @@ Created on Dec 22, 2017
 @author: matthewcowen-green
 '''
 
-import interpreter2 as pyt
+import interpreter3 as pyt
 import numpy as np
+from customlist import customlist
 
 def parse(line):
-    return pyt.parse(line,[])
+    return pyt.parse(line,customlist())
 
 
 
@@ -399,4 +400,7 @@ parse(u"")
       2⁵
       ←4≥Đ6²⁺3**⇹¢5«+áƇǰ""")'''
 #parse(u"0?ŕ5:ŕ2;2*:;")
-parse(u"←6²Ĩ")
+#parse(u"←6²Ĩş3‰")
+#parse(u"←ĐĐ3=?1:ŕĐ2⇹Ř03ȘĽ⅟⌊⁺3=0↔+  ;")
+#parse(u"3ᴇ")
+#parse(u"232°")

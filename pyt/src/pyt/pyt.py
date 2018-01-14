@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import interpreter2 as interp
+import interpreter3 as interp
 import argparse
 import io
-
+from customlist import customlist
 
 def parse(line):
-    return interp.parse(line,[])
-
+    return interp.parse(line,customlist())
 
 def main():
     parser=argparse.ArgumentParser(description="Executes a pyt file")
@@ -15,7 +14,7 @@ def main():
     parser.add_argument("--bytecode","-b",action="store_true")
     args=parser.parse_args()
     
-
+    
     if(args.bytecode):
         codepage=u"⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·"
         f=io.open(args.file,mode="rb")
