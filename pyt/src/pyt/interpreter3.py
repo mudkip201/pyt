@@ -996,7 +996,12 @@ def interpret(cc,stck,i,line):
     elif cc==u"Đ": #duplicate item on top of stack
         q=stck.pop()
         stck.append(q)
-        stck.append(q)
+        if(isinstance(q,np.ndarray)):
+            stck.append(np.array(q))
+        elif(isinstance(q,list)):
+            stck.append([x for x in q])
+        else:
+            stck.append(q)
     elif cc==u"é":
         stck.append(2.71828182845904523536028747135266249775724709369995)
     elif cc==u"ᴇ":
