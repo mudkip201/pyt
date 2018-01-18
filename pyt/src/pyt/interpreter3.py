@@ -56,7 +56,7 @@ def parse(line, stck):
 
 
 def interpret(cc,stck,i,line):
-    print(stck,cc,unicode(i))
+    #print(stck,cc,unicode(i))
     if(cc in string.digits):
         stck.append(int(cc))
         return stck,i
