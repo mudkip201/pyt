@@ -20,12 +20,12 @@ class customlist(Sequence):
                 qq=float(q)
                 if("." not in q):
                     qq=int(qq)
+                return qq
             except ValueError:
-                qq=q
                 if(q[0]=='[' and q[-1]==']'):
                     return eval(q)
-            else:
-                return qq
+                else:
+                    return q
         return self.data.pop()
 
     def __repr__(self):

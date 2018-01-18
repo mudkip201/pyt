@@ -9,6 +9,7 @@ Created on Dec 22, 2017
 import interpreter3 as pyt
 import numpy as np
 from customlist import customlist
+from collections import Counter
 
 def parse(line):
     return pyt.parse(line,customlist())
@@ -405,5 +406,11 @@ parse(u"")
 #parse(u"3ᴇ")
 #parse(u"232°")
 #parse(u"ɳᒆʀ")
-parse(u"řĐĐ↔*⇹ḶƖ⁺·")
-cc=customlist()
+#parse(u"řĐĐ↔*⇹ḶƖ⁺·")
+#parse(u"ĐỤɔƩ")
+#xx=u"ĐɔƩ"
+#xxx=Counter(xx)
+#parse(u"ĐỤ⇹ɔƩ")
+#parse(u"ĐĐĐĐ≡")
+#print(xxx[u"Đ"])
+#print [xxx[x] for x in u"ĐɔƩ"]

@@ -56,7 +56,7 @@ def parse(line, stck):
 
 
 def interpret(cc,stck,i,line):
-    #print(stck,cc,unicode(i))
+    print(stck,cc,unicode(i))
     if(cc in string.digits):
         stck.append(int(cc))
         return stck,i
@@ -561,7 +561,7 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.pow(stck.pop(),1./2))
         elif(isinstance(stck[-1],list)):
-            stck.append([sqrt(float((x))) for x in stck.pop()])
+            stck.append([sqrt(float(x)) for x in stck.pop()])
         else:
             stck.append(sqrt(float(stck.pop())))
     elif cc==u"∛":
@@ -639,7 +639,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.divide(np.array(stck.pop()),np.array(q)))
         else:
             q=float(stck.pop())
-            if(isinstance(stck[-1],list)):
+            if(isinstance(q,list)):
                 stck.append(np.divide(np.array(stck.pop()),q))
             else:
                 stck.append(stck.pop()/q)
@@ -658,7 +658,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.add(np.array(stck.pop()),np.array(q)).tolist())
         else:
             q=stck.pop()
-            if(isinstance(stck[-1],list)):
+            if(isinstance(q,list)):
                 stck.append(np.add(np.array(stck.pop()),q))
             else:
                 stck.append(stck.pop()+q)
@@ -677,7 +677,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.subtract(np.array(stck.pop()),np.array(q)).tolist())
         else:
             q=stck.pop()
-            if(isinstance(stck[-1],list)):
+            if(isinstance(q,list)):
                 stck.append(np.subtract(np.array(stck.pop()),q))
             else:
                 stck.append(stck.pop()-q)
@@ -696,7 +696,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.multiply(np.array(stck.pop()),np.array(q)).tolist())
         else:
             q=stck.pop()
-            if(isinstance(stck[-1],list)):
+            if(isinstance(q,list)):
                 stck.append(np.multiply(np.array(stck.pop()),q))
             else:
                 stck.append(stck.pop()*q)
@@ -1446,11 +1446,13 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.unique(stck.pop()))
         if(isinstance(stck[-1],list)):
-            stck.append(getUnique((stck.pop())))
+            stck.append(getUnique(stck.pop()))
+        elif(isinstance(stck[-1],unicode) or isinstance(stck[-1],str)):
+            stck.append(getUnique(stck.pop()))
         else:
             stckk=stck
             stck=customlist()
-            stck.append(getUnique((stckk.data)))
+            stck.append(getUnique(stckk.data))
     elif cc==u"ʊ":
         stck.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     elif cc==u"Ž":
