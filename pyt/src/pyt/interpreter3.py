@@ -1082,11 +1082,25 @@ def interpret(cc,stck,i,line):
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
         if(isinstance(stck[-1],list)):
-            stck.append(u"".join(stck.pop()))
+            q=stck.pop()
+            qq=[]
+            for x in q:
+                if not isinstance(x,str) or not isinstance(x,unicode):
+                    qq.append(unicode(x))
+                else:
+                    qq.append(x)
+            stck.append(u"".join(qq))
         else:
             stckk=stck
             stck=customlist()
-            stck.append(u"".join(stckk.data))
+            q=stckk.data
+            qq=[]
+            for x in q:
+                if not isinstance(x,str) or not isinstance(x,unicode):
+                    qq.append(unicode(x))
+                else:
+                    qq.append(x)
+            stck.append(u"".join(qq))
     elif cc==u"Ḷ":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.log10(stck.pop()))

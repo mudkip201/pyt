@@ -407,10 +407,6 @@ parse(u"")
 #parse(u"232°")
 #parse(u"ɳᒆʀ")
 #parse(u"řĐĐ↔*⇹ḶƖ⁺·")
-#parse(u"ĐỤɔƩ")
-#xx=u"ĐɔƩ"
-#xxx=Counter(xx)
 #parse(u"ĐỤ⇹ɔƩ")
-#parse(u"ĐĐĐĐ≡")
-#print(xxx[u"Đ"])
-#print [xxx[x] for x in u"ĐɔƩ"]
+#parse(u"!₫ą0⦋")
+#parse(u"Đ0⇹Řć2%ǰ2Ĩ")
