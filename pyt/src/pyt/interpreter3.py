@@ -1258,7 +1258,10 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
             q=q.tolist()
-        stck.append(list(permutations(q)))
+        if(isinstance(q,unicode) or isinstance(q,str)):
+            stck.append([''.join(p) for p in permutations(q)])
+        else:
+            stck.append(list([list(x) for x in permutations(q)]))
     elif cc==u"ṕ":
         q=stck.pop()
         qq=stck.pop()
