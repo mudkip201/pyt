@@ -159,72 +159,72 @@ def interpret(cc,stck,i,line):
             stck.append(stck.pop()**9)
     elif cc==u"₀":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/10)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/10)
+            stck.append([x/10 for x in stck.pop()])
         else:
             stck.append(stck.pop()/10)
     elif cc==u"₁":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/11)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/11)
+            stck.append([x/11 for x in stck.pop()])
         else:
             stck.append(stck.pop()/11)
     elif cc==u"₂":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/2)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/2)
+            stck.append([x/2 for x in stck.pop()])
         else:
             stck.append(stck.pop()/2)
     elif cc==u"₃":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/3)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/3)
+            stck.append([x/3 for x in stck.pop()])
         else:
             stck.append(stck.pop()/3)
     elif cc==u"₄":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/4)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/4)
+            stck.append([x/4 for x in stck.pop()])
         else:
             stck.append(stck.pop()/4)
     elif cc==u"₅":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/5)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/5)
+            stck.append([x/5 for x in stck.pop()])
         else:
             stck.append(stck.pop()/5)
     elif cc==u"₆":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/6)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/6)
+            stck.append([x/6 for x in stck.pop()])
         else:
             stck.append(stck.pop()/6)
     elif cc==u"₇":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/7)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/7)
+            stck.append([x/7 for x in stck.pop()])
         else:
             stck.append(stck.pop()/7)
     elif cc==u"₈":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/8)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/8)
+            stck.append([x/8 for x in stck.pop()])
         else:
             stck.append(stck.pop()/8)
     elif cc==u"₉":
         if(isinstance(stck[-1],np.ndarray)):
-            stck.append(np.array(stck.pop(),dtype='f'))
+            stck.append(np.array(stck.pop(),dtype='f')/9)
         if(isinstance(stck[-1],list)):
-            stck.append(np.array(stck.pop(), dtype='f')/9)
+            stck.append([x/9 for x in stck.pop()])
         else:
             stck.append(stck.pop()/9)
     elif cc==u"¼":
