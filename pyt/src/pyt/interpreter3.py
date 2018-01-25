@@ -1229,11 +1229,23 @@ def interpret(cc,stck,i,line):
             print(bin(int(q))+"\n")
     elif cc==u"Ҏ":
         q=stck.pop()
-        w=str(int(q))
-        k=1
-        for j in w:
-            k*=int(j)
-        stck.append(k)
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            qq=[]
+            for x in q:
+                w=str(int(x))
+                k=1
+                for j in w:
+                    k*=int(j)
+                qq.append(k)
+            stck.append(qq)
+        else:
+            w=str(int(q))
+            k=1
+            for j in w:
+                k*=int(j)
+            stck.append(k)
     elif cc==u"ᑭ": #Polygonal number
         q=stck.pop()
         qq=stck.pop()
@@ -1398,13 +1410,14 @@ def interpret(cc,stck,i,line):
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
             q=q.tolist()
-        if(isinstance(q,list)){
+        if(isinstance(q,list)):
             qq=[]
             for x in q:
                 w=str(int(x))
                 k=0
                 for j in w:
                     k+=int(j)
+                qq.append(k)
             stck.append(qq)
         else:
             w=str(int(q))
