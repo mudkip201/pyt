@@ -639,7 +639,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.divide(np.array(stck.pop()),np.array(q)))
         elif(isinstance(stck[-2],list) and (isinstance(stck[-1],int) or isinstance(stck[-1],long) or isinstance(stck[-1],float))):
             q=stck.pop()
-            stck.append([q/x for x in stck.pop()])
+            stck.append([x/q for x in stck.pop()])
         else:
             q=float(stck.pop())
             if(isinstance(q,list)):
@@ -661,7 +661,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.add(np.array(stck.pop()),np.array(q)).tolist())
         elif(isinstance(stck[-2],list) and (isinstance(stck[-1],int) or isinstance(stck[-1],long) or isinstance(stck[-1],float))):
             q=stck.pop()
-            stck.append([q+x for x in stck.pop()])
+            stck.append([x+q for x in stck.pop()])
         else:
             q=stck.pop()
             if(isinstance(q,list)):
@@ -683,7 +683,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.subtract(np.array(stck.pop()),np.array(q)).tolist())
         elif(isinstance(stck[-2],list) and (isinstance(stck[-1],int) or isinstance(stck[-1],long) or isinstance(stck[-1],float))):
             q=stck.pop()
-            stck.append([q-x for x in stck.pop()])
+            stck.append([x-q for x in stck.pop()])
         else:
             q=stck.pop()
             if(isinstance(q,list)):
@@ -705,7 +705,7 @@ def interpret(cc,stck,i,line):
             stck.append(np.multiply(np.array(stck.pop()),np.array(q)).tolist())
         elif(isinstance(stck[-2],list) and (isinstance(stck[-1],int) or isinstance(stck[-1],long) or isinstance(stck[-1],float))):
             q=stck.pop()
-            stck.append([q*x for x in stck.pop()])
+            stck.append([x*q for x in stck.pop()])
         else:
             q=stck.pop()
             if(isinstance(q,list)):
@@ -1396,11 +1396,22 @@ def interpret(cc,stck,i,line):
             stck.append(asinh(stck.pop()))
     elif cc==u"Ś":
         q=stck.pop()
-        w=str(int(q))
-        k=0
-        for j in w:
-            k+=int(j)
-        stck.append(k)
+        if(isinstance(q,np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)){
+            qq=[]
+            for x in q:
+                w=str(int(x))
+                k=0
+                for j in w:
+                    k+=int(j)
+            stck.append(qq)
+        else:
+            w=str(int(q))
+            k=0
+            for j in w:
+                k+=int(j)
+            stck.append(k)
     elif cc==u"ş" or cc==u"ş":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(stck.pop().tolist())
