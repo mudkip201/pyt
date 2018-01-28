@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝᴇḞᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·?:;'
+# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɐɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝᴇḞƑᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·?:;'
 
 
 
@@ -902,6 +902,318 @@ def interpret(cc,stck,i,line):
         stckk=stck.data
         stck=customlist()
         stck.append(stckk)
+    elif cc==u"ɐ": #modifier character (for functions that can handle two arrays - (e.g., ɐ+ with [1,2,3] and [4,5,6] on the stack pushes [[1+4,1+5,1+6],[2+4,2+5,2+6],[3+4,3+5,3+6]]))
+        i+=1
+        cc=line[i]
+        if cc==u"°":
+            q=stck.pop()
+            qq=stck.pop()
+            qqq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            if isinstance(qqq,np.ndarray):
+                qqq=qqq.tolist()
+            if(isinstance(q,list)):
+                if(isinstance(qq,list)):
+                    if(isinstance(qqq,list)):
+                        stck.append([[[pow(int(z),int(y),int(x)) for x in q] for y in qq] for z in qqq])
+                    else:
+                        stck.append([[pow(int(qqq),int(y),int(x)) for x in q] for y in qq])
+                else:
+                    stck.append([[pow(int(z),int(qq),int(x)) for x in q] for z in qqq])
+            else:
+                stck.append([[pow(int(z),int(y),int(q)) for y in qq] for z in qqq])
+        elif cc==u"|":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y%x==0 for x in q] for y in qq])
+        elif cc==u"÷":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y//x for x in q] for y in qq])
+        elif cc==u"^":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[pow(y,x) for x in q] for y in qq])
+        elif cc==u"«":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y<<x for x in q] for y in qq])
+        elif cc==u"»":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y>>x for x in q] for y in qq])
+        elif cc==u"≤":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y<=x for x in q] for y in qq])
+        elif cc==u"≥":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y>=x for x in q] for y in qq])
+        elif cc==u"<":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y<x for x in q] for y in qq])
+        elif cc==u">":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y>x for x in q] for y in qq])
+        elif cc==u"=":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y==x for x in q] for y in qq])
+        elif cc==u"≠":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y!=x for x in q] for y in qq])
+        elif cc==u"∈":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y in x for x in q] for y in qq])
+        elif cc==u"%":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y%x for x in q] for y in qq])
+        elif cc==u"/":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y/x for x in q] for y in qq])
+        elif cc==u"+":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y+x for x in q] for y in qq])
+        elif cc==u"-":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y-x for x in q] for y in qq])
+        elif cc==u"*":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[y*x for x in q] for y in qq])
+        elif cc==u"∧":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[(y and x) for x in q] for y in qq])
+        elif cc==u"∨":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[(y or x) for x in q] for y in qq])
+        elif cc==u"⊻":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[not(y or x) for x in q] for y in qq])
+        elif cc==u"⊼":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[not(y and x) for x in q] for y in qq])
+        elif cc==u"⊽":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[((y and not x) or (not y and x)) for x in q] for y in qq])
+        elif cc==u"⊙":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[not((y and not x) or (not y and x)) for x in q] for y in qq])
+        elif cc==u"‰":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[[y//x,y%x] for x in q] for y in qq])
+        elif cc==u"×":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[np.transpose([np.tile(y, len(x)), np.repeat(x, len(y))]) for x in q] for y in qq])
+        elif cc==u"ć":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[factorial(y)/(factorial(x)*factorial(y-x)) for x in q] for y in qq])
+        elif cc==u"ɔ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            qqq=[Counter(x) for x in q]
+            stck.append([[qqq[j][y] for j in range(len(q))] for y in qq])
+        elif cc==u"Ǥ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[gcd(y,x) for x in q] for y in qq])
+        elif cc==u"Ĩ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[readasbase(unicode(y),int(x)) for x in q] for y in qq])
+        elif cc==u"Ĺ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[int(y)*int(x)/gcd(int(y),int(x)) for x in q] for y in qq])
+        elif cc==u"Ľ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[log(y,x) for x in q] for y in qq])
+        elif cc==u"ɯ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[mulinv(int(y),int(x)) for x in q] for y in qq])
+        elif cc==u"Ṕ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            print([[unicode(base(int(y),int(x))) for x in q] for y in qq]+"\n")
+        elif cc==u"ᑭ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[1./2*y*((x-2)*y-(x-4)) for x in q] for y in qq])
+        elif cc==u"₱":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            stck.append([[factorial(y)/factorial(y-x) for x in q] for y in qq])
+        elif cc==u"ṕ":
+            q=stck.pop()
+            qq=stck.pop()
+            if isinstance(q,np.ndarray):
+                q=q.tolist()
+            if isinstance(qq,np.ndarray):
+                qq=qq.tolist()
+            print([[unicode(base(int(y),int(x))) for x in q] for y in qq])
     elif cc==u"ɓ": #convert to binary string (less the 0b)
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
@@ -1031,6 +1343,11 @@ def interpret(cc,stck,i,line):
             stck.append([fib(int(x)) for x in stck.pop()])
         else:
             stck.append(fib(int(stck.pop())))
+    elif cc==u"Ƒ": #flatten array
+        if(isinstance(stck[-1],np.ndarray)):
+            stck.append(stck.pop().flatten())
+        else:
+            stck.append(flatten(stck.pop()))
     elif cc==u"ᵮ":
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
@@ -1365,7 +1682,7 @@ def interpret(cc,stck,i,line):
             if(isinstance(q,list)):
                 stck.append([factorial(int(qq))/factorial(int(qq)-int(x)) for x in q])
             else:
-                stck.append(factorial(int(q))/factorial(int(qq)-int(q)))
+                stck.append(factorial(int(qq))/factorial(int(qq)-int(q)))
     elif cc==u"Ř":
         q=list(range(int(stck[-2]),int(stck[-1])+1))
         stck.pop()
@@ -1749,3 +2066,7 @@ def eulertot(n):
     for i in getUnique(primeFactors(n)):
         y-=y/i
     return int(y)
+
+
+def flatten(lst):
+    return sum( (x.flatten().tolist() if isinstance(x, np.ndarray) else [x] if not isinstance(x, list) else flatten(x) for x in lst), [] )
