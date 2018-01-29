@@ -799,7 +799,7 @@ def interpret(cc,stck,i,line):
                 stck.append(qqq)
             else:
                 qqq=qq&q
-                stck.append(2**qqq.bit_length()-qqq-1)
+                stck.append(2**max(q.bit_length(),qq.bit_length(),qqq.bit_length())-qqq-1)
     elif cc==u"⊽": #NOR
         q=stck.pop()
         qq=stck.pop()
@@ -825,7 +825,7 @@ def interpret(cc,stck,i,line):
                 stck.append(qqq)
             else:
                 qqq=qq|q
-                stck.append(2**qqq.bit_length()-qqq-1)
+                stck.append(2**max(q.bit_length(),qq.bit_length(),qqq.bit_length())-qqq-1)
     elif cc==u"⊻": #XOR
         q=stck.pop()
         qq=stck.pop()
@@ -868,7 +868,7 @@ def interpret(cc,stck,i,line):
                 stck.append(qqq)
             else:
                 qqq=qq^q
-                stck.append(2**qqq.bit_length()-qqq-1)
+                stck.append(2**max(q.bit_length(),qq.bit_length(),qqq.bit_length())-qqq-1)
     elif cc==u"⌊":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.floor(stck.pop()))
