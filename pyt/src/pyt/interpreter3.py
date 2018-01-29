@@ -745,14 +745,14 @@ def interpret(cc,stck,i,line):
             q=q.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                stck.append([qq[j] and q[j] for j in range(min(len(q),len(qq)))])
+                stck.append([qq[j]&q[j] for j in range(min(len(q),len(qq)))])
             else:
-                stck.append([x and q for x in qq])
+                stck.append([x&q for x in qq])
         else:
             if(isinstance(q,list)):
-                stck.append([qq and x for x in q])
+                stck.append([qq&x for x in q])
             else:
-                stck.append(qq and q)
+                stck.append(qq&q)
     elif cc==u"∨":
         q=stck.pop()
         qq=stck.pop()
@@ -762,14 +762,14 @@ def interpret(cc,stck,i,line):
             q=q.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                stck.append([qq[j] or q[j] for j in range(min(len(q),len(qq)))])
+                stck.append([qq[j]|q[j] for j in range(min(len(q),len(qq)))])
             else:
-                stck.append([x or q for x in qq])
+                stck.append([x|q for x in qq])
         else:
             if(isinstance(q,list)):
-                stck.append([qq or x for x in q])
+                stck.append([qq|x for x in q])
             else:
-                stck.append(qq or q)
+                stck.append(qq|q)
     elif cc==u"⊼": #NAND
         q=stck.pop()
         qq=stck.pop()
@@ -779,31 +779,53 @@ def interpret(cc,stck,i,line):
             q=q.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                stck.append([not(qq[j] and q[j]) for j in range(min(len(q),len(qq)))])
+                qqq=[qq[j]&q[j] for j in range(min(len(q),len(qq)))]
+                for j in range(len(qqq)):
+                    dd=max(q[j].bit_length(),qq[j].bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
             else:
-                stck.append([not(x and q) for x in qq])
+                qqq=[x&q for x in qq]
+                for j in range(len(qqq)):
+                    dd=max(qq[j].bit_length(),q.bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
         else:
             if(isinstance(q,list)):
-                stck.append([not(qq and x) for x in q])
+                qqq=[x&q for x in qq]
+                for j in range(len(qqq)):
+                    dd=max(q[j].bit_length(),qq.bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
             else:
-                stck.append(not(qq and q))
+                qqq=qq&q
+                stck.append(2**qqq.bit_length()-qqq-1)
     elif cc==u"⊽": #NOR
         q=stck.pop()
         qq=stck.pop()
-        if(isinstance(qq,np.ndarray)):
-            qq=qq.tolist()
-        if(isinstance(q,np.ndarray)):
-            q=q.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                stck.append([not(qq[j] or q[j]) for j in range(min(len(q),len(qq)))])
+                qqq=[qq[j]|q[j] for j in range(min(len(q),len(qq)))]
+                for j in range(len(qqq)):
+                    dd=max(q[j].bit_length(),qq[j].bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
             else:
-                stck.append([not(x or q) for x in qq])
+                qqq=[x|q for x in qq]
+                for j in range(len(qqq)):
+                    dd=max(qq[j].bit_length(),q.bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
         else:
             if(isinstance(q,list)):
-                stck.append([not(qq or x) for x in q])
+                qqq=[qq|x for x in q]
+                for j in range(len(qqq)):
+                    dd=max(qq.bit_length(),q[j].bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
             else:
-                stck.append(not(qq or q))
+                qqq=qq|q
+                stck.append(2**qqq.bit_length()-qqq-1)
     elif cc==u"⊻": #XOR
         q=stck.pop()
         qq=stck.pop()
@@ -813,31 +835,40 @@ def interpret(cc,stck,i,line):
             q=q.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                stck.append([(qq[j] and not q[j]) or (not qq[j] and q[j]) for j in range(min(len(q),len(qq)))])
+                stck.append([qq[j]^q[j] for j in range(min(len(q),len(qq)))])
             else:
-                stck.append([(x and not q) or (not x and q) for x in qq])
+                stck.append([x^q for x in qq])
         else:
             if(isinstance(q,list)):
-                stck.append([(qq and not x) or (not qq and x) for x in q])
+                stck.append([qq^x for x in q])
             else:
-                stck.append((qq and not q) or (q and not qq))
+                stck.append(qq^q)
     elif cc==u"⊙": #XNOR
         q=stck.pop()
         qq=stck.pop()
-        if(isinstance(qq,np.ndarray)):
-            qq=qq.tolist()
-        if(isinstance(q,np.ndarray)):
-            q=q.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
-                stck.append([(qq[j] and q[j]) or not(qq[j] or q[j]) for j in range(min(len(q),len(qq)))])
+                qqq=[qq[j]^q[j] for j in range(min(len(q),len(qq)))]
+                for j in range(len(qqq)):
+                    dd=max(q[j].bit_length(),qq[j].bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
             else:
-                stck.append([(x and q) or not(x or q) for x in qq])
+                qqq=[x^q for x in qq]
+                for j in range(len(qqq)):
+                    dd=max(qq[j].bit_length(),q.bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
         else:
             if(isinstance(q,list)):
-                stck.append([(qq and x) or not(qq or x) for x in q])
+                qqq=[qq^x for x in q]
+                for j in range(len(qqq)):
+                    dd=max(q[j].bit_length(),qq.bit_length(),qqq[j].bit_length())
+                    qqq[j]=2**dd-qqq[j]-1
+                stck.append(qqq)
             else:
-                stck.append((qq and q) or not(qq or q))
+                qqq=qq^q
+                stck.append(2**qqq.bit_length()-qqq-1)
     elif cc==u"⌊":
         if(isinstance(stck[-1],np.ndarray)):
             stck.append(np.floor(stck.pop()))
@@ -1068,7 +1099,7 @@ def interpret(cc,stck,i,line):
                 q=q.tolist()
             if isinstance(qq,np.ndarray):
                 qq=qq.tolist()
-            stck.append([[(y and x) for x in q] for y in qq])
+            stck.append([[(y&x) for x in q] for y in qq])
         elif cc==u"∨":
             q=stck.pop()
             qq=stck.pop()
@@ -1076,7 +1107,7 @@ def interpret(cc,stck,i,line):
                 q=q.tolist()
             if isinstance(qq,np.ndarray):
                 qq=qq.tolist()
-            stck.append([[(y or x) for x in q] for y in qq])
+            stck.append([[(y|x) for x in q] for y in qq])
         elif cc==u"⊻":
             q=stck.pop()
             qq=stck.pop()
@@ -1084,7 +1115,12 @@ def interpret(cc,stck,i,line):
                 q=q.tolist()
             if isinstance(qq,np.ndarray):
                 qq=qq.tolist()
-            stck.append([[not(y or x) for x in q] for y in qq])
+            qqqq=[[max(y.bit_length(),x.bit_length()) for x in q] for y in qq]
+            qqq=[[y|x for x in q] for y in qq]
+            for j in range(len(qqq)):
+                for k in range(len(qqq[j])):
+                    qqq[j][k]=2**max(qqqq[j][k],qqq[j][k].bit_length())-qqq[j][k]-1
+            stck.append(qqq)
         elif cc==u"⊼":
             q=stck.pop()
             qq=stck.pop()
@@ -1092,7 +1128,12 @@ def interpret(cc,stck,i,line):
                 q=q.tolist()
             if isinstance(qq,np.ndarray):
                 qq=qq.tolist()
-            stck.append([[not(y and x) for x in q] for y in qq])
+            qqqq=[[max(y.bit_length(),x.bit_length()) for x in q] for y in qq]
+            qqq=[[y&x for x in q] for y in qq]
+            for j in range(len(qqq)):
+                for k in range(len(qqq[j])):
+                    qqq[j][k]=2**max(qqqq[j][k],qqq[j][k].bit_length())-qqq[j][k]-1
+            stck.append(qqq)
         elif cc==u"⊽":
             q=stck.pop()
             qq=stck.pop()
@@ -1100,7 +1141,7 @@ def interpret(cc,stck,i,line):
                 q=q.tolist()
             if isinstance(qq,np.ndarray):
                 qq=qq.tolist()
-            stck.append([[((y and not x) or (not y and x)) for x in q] for y in qq])
+            stck.append([[(x^y) for x in q] for y in qq])
         elif cc==u"⊙":
             q=stck.pop()
             qq=stck.pop()
@@ -1108,7 +1149,12 @@ def interpret(cc,stck,i,line):
                 q=q.tolist()
             if isinstance(qq,np.ndarray):
                 qq=qq.tolist()
-            stck.append([[not((y and not x) or (not y and x)) for x in q] for y in qq])
+            qqq=[[y^x for x in q] for y in qq]
+            qqqq=[[max(y.bit_length(),x.bit_length()) for x in q] for y in qq]
+            for j in range(len(qqq)):
+                for k in range(len(qqq[j])):
+                    qqq[j][k]=2**max(qqqq[j][k],qqq[j][k].bit_length())-qqq[j][k]-1
+            stck.append(qqq)
         elif cc==u"‰":
             q=stck.pop()
             qq=stck.pop()
