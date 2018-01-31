@@ -1632,7 +1632,12 @@ def interpret(cc,stck,i,line):
                 stck.append(1./2*qq*((q-2)*qq-(q-4)))
     elif cc==u"₽":
         q=stck.pop()
-        stck.append(unicode(q)==unicode(q)[::-1])
+        if(isinstance(q, np.ndarray)):
+            q=q.tolist()
+        if(isinstance(q,list)):
+            stck.append(q==q[::-1])
+        else:
+            stck.append(unicode(q)==unicode(q)[::-1])
     elif cc==u"Ṗ":
         q=stck.pop()
         if(isinstance(q,np.ndarray)):
