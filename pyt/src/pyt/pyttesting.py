@@ -6,7 +6,7 @@ Created on Dec 22, 2017
 @author: matthewcowen-green
 '''
 
-import interpreter3 as pyt
+import interpreter4 as pyt
 import numpy as np
 from customlist import customlist
 from collections import Counter
@@ -136,7 +136,7 @@ parse(u"9ř≡")
 parse(u"9Đ")
 parse(u"9ř5Ș")
 parse(u"5_")
-#parse(u"←←3Đ3Ș⇹Ĩ3Ș⇹Ĩ⇹Ř3ṕ")
+parse(u"←←3Đ3Ș⇹Ĩ3Ș⇹Ĩ⇹Ř3ṕ")
 parse(u"7ř‼")
 parse(u"5ř7ɯ")'''
 
@@ -432,3 +432,14 @@ parse(u"")
 #parse(u"4⁷√3³*72ᴇ√*+") - 3526
 #parse(u"↔←*₋")
 #parse(u"₽")
+#parse(u"+")
+
+
+
+
+
+
+
+
+##ANSWERS ON PPCG
+#parse(u"")

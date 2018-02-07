@@ -1723,7 +1723,7 @@ def interpret(cc,stck,i,line):
         if(isinstance(q,np.ndarray)):
             q=q.tolist()
         if(isinstance(qq,np.ndarray)):
-                qq=qq.tolist()
+            qq=qq.tolist()
         if(isinstance(qq,list)):
             if(isinstance(q,list)):
                 stck.append([factorial(int(qq[j]))/factorial(int(qq[j])-int(q[j])) for j in range(min(len(qq),len(q)))])
@@ -1968,8 +1968,8 @@ def interpret(cc,stck,i,line):
         i=string.find(line,";",i)
     elif cc==u"±":
         stck.append(np.sign(stck.pop()))
-
     return stck,i
+
 
 
 def isPrime(n):
