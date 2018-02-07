@@ -186,11 +186,15 @@ def interpret(cc,stck,i,line):
         qqq=stck.pop()
         stck.append(pmodpow(q,qq,qqq))
     elif cc==u"|":
-        stck.append(pdivides(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pdivides(qq,q))
     elif cc==u"!":
         stck.append(pfactorial(stck.pop()))
     elif cc==u"÷":
-        stck.append(pintdiv(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pintdiv(qq,q))
     elif cc==u"↑":
         if(isinstance(stck[-1],list)):
             stck.append(max(stck.pop()))
@@ -239,25 +243,41 @@ def interpret(cc,stck,i,line):
     elif cc==u"¬":
         stck.append(pnot(stck.pop()))
     elif cc==u"^":
-        stck.append(ppow(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(ppow(qq,q))
     elif cc==u"«":
-        stck.append(pbitshiftleft(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pbitshiftleft(qq,q))
     elif cc==u"»":
-        stck.append(pbitshiftright(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pbitshiftright(qq,q))
     elif cc==u"≤":
-        stck.append(plteq(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(plteq(qq,q))
     elif cc==u"≥":
-        stck.append(pgteq(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pgteq(qq,q))
     elif cc==u"<":
-        stck.append(plessthan(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(plessthan(qq,q))
     elif cc==u">":
-        stck.append(pgreaterthan(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pgreaterthan(qq,q))
     elif cc==u"=":
-        stck.append(peq(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(peq(qq,q))
     elif cc==u"≠":
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pneq(q,qq))
+        stck.append(pneq(qq,q))
     elif cc==u"√":
         stck.append(ppowconst(stck.pop(),1./2))
     elif cc==u"∛":
@@ -278,15 +298,25 @@ def interpret(cc,stck,i,line):
     elif cc==u"˜": #unsigned two's-complement
         stck.append(ptwocomp(stck.pop()))
     elif cc==u"%":
-        stck.append(pmod(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pmod(qq,q))
     elif cc==u"/":
-        stck.append(pdivide(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pdivide(qq,q))
     elif cc==u"+":
-        stck.append(pplus(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pplus(qq,q))
     elif cc==u"-":
-        stck.append(pminus(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pminus(qq,q))
     elif cc==u"*":
-        stck.append(pmultiply(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pmultiply(qq,q))
     elif cc==u"△":
         stck.append(ptriangular(stck.pop()))
     elif cc==u"⬠":
@@ -294,25 +324,29 @@ def interpret(cc,stck,i,line):
     elif cc==u"⬡":
         stck.append(phexagonal(stck.pop()))
     elif cc==u"∧":
-        stck.append(pand(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(pand(qq,q))
     elif cc==u"∨":
-        stck.append(stck.pop(),stck.pop())
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(por(qq,q))
     elif cc==u"⊼": #NAND
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pnand(q,qq))
+        stck.append(pnand(qq,q))
     elif cc==u"⊽": #NOR
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pnor(q,qq))
+        stck.append(pnor(qq,q))
     elif cc==u"⊻": #XOR
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pxor(q,qq))
+        stck.append(pxor(qq,q))
     elif cc==u"⊙": #XNOR
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pxnor(q,qq))
+        stck.append(pxnor(qq,q))
     elif cc==u"⌊":
         stck.append(pfloor(stck.pop()))
     elif cc==u"⌈":
@@ -322,7 +356,7 @@ def interpret(cc,stck,i,line):
     elif cc==u"‰": #INTEGER DIVISION AND REMAINDER
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pintdiv(q,qq))
+        stck.append(pintdiv(qq,q))
     elif cc==u"×":
         x=stck.pop()
         y=stck.pop()
@@ -533,7 +567,7 @@ def interpret(cc,stck,i,line):
     elif cc==u"ć":
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pncr(q,qq))
+        stck.append(pncr(qq,q))
     elif cc==u"Ć":
         stck.append(pcatalan(stck.pop()))
     elif cc==u"ĉ":
@@ -572,13 +606,13 @@ def interpret(cc,stck,i,line):
     elif cc==u"Ǥ":
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pgcd(q,qq))
+        stck.append(pgcd(qq,q))
     elif cc==u"Ħ":
         stck.append(phamming(stck.pop()))
     elif cc==u"Ĩ":
         q=stck.pop()
         qq=stck.pop()
-        stck.append(preadasbase(q,qq))
+        stck.append(preadasbase(qq,q))
     elif cc==u"Ɩ":
         stck.append(pint(stck.pop()))
     elif cc==u"ǰ":
@@ -607,11 +641,11 @@ def interpret(cc,stck,i,line):
     elif cc==u"Ļ":
         stck.append(plog(stck.pop()))
     elif cc==u"Ľ":
-        stck.append(plogx(q,qq))
+        stck.append(plogx(qq,q))
     elif cc==u"Ĺ":
         q=stck.pop()
         qq=stck.pop()
-        stck.append(plcm(q,qq))
+        stck.append(plcm(qq,q))
     elif cc==u"Ł":
         if(isinstance(stck[-1],list)):
             stck.append(len(stck.pop()))
@@ -630,13 +664,13 @@ def interpret(cc,stck,i,line):
     elif cc==u"ɯ": #modular inverse
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pmulinv(q,qq))
+        stck.append(pmulinv(qq,q))
     elif cc==u"ɳ":
         stck.append("0123456789")
     elif cc==u"Ṕ":
         q=stck.pop()
         qq=stck.pop()
-        print(ptobase(q,qq)+"\n")
+        print(ptobase(qq,q)+"\n")
     elif cc==u"Ƥ":
         print(unicode(stck.pop())+"\n")
     elif cc==u"Ƿ":
@@ -646,7 +680,7 @@ def interpret(cc,stck,i,line):
     elif cc==u"ᑭ": #Polygonal number
         q=stck.pop()
         qq=stck.pop()
-        stck.append(ppolygon(q,qq))
+        stck.append(ppolygon(qq,q))
     elif cc==u"₽":
         q=stck.pop()
         if(isinstance(q,list)):
@@ -664,7 +698,7 @@ def interpret(cc,stck,i,line):
     elif cc==u"ṕ":
         q=stck.pop()
         qq=stck.pop()
-        print(stck.append(ptobase(q,qq)))
+        print(stck.append(ptobase(qq,q)))
     elif cc==u"ƥ":
         print(unicode(stck.pop()))
     elif cc==u"ṗ":
@@ -692,15 +726,17 @@ def interpret(cc,stck,i,line):
     elif cc==u"₱":
         q=stck.pop()
         qq=stck.pop()
-        stck.append(pnpk(q,qq))
+        stck.append(pnpk(qq,q))
     elif cc==u"Ř":
-        stck.append(prange(stck.pop(),stck.pop()))
+        q=stck.pop()
+        qq=stck.pop()
+        stck.append(prange(qq,q))
     elif cc==u"ɽ":
         stck.append(int(random.random()*(2**32)))
     elif cc==u"ɾ":
         q=int(stck.pop())
         qq=int(stck.pop())
-        stck.append(prandrange(q,qq))
+        stck.append(prandrange(qq,q))
     elif cc==u"ɹ":
         stck.append(random.getrandbits(1))
     elif cc==u"ʀ":
@@ -854,7 +890,7 @@ def pmodpow(q,qq,qqq):
         return [pmodpow(qqq2,qq,q) for qqq2 in qqq]
     return pow(int(qqq),int(qq),int(q))
 
-def pdivides(q,qq):
+def pdivides(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pdivides(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -868,7 +904,7 @@ def pfactorial(q):
         return [pfactorial(qq) for qq in q]
     return factorial(int(q))
 
-def pintdiv(q,qq):
+def pintdiv(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pintdiv(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -882,7 +918,7 @@ def pnot(q):
         return [pnot(qq) for qq in q]
     return not(q)
 
-def ppow(q,qq):
+def ppow(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [ppow(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -893,7 +929,7 @@ def ppow(q,qq):
         return qq**q
     return pow(qq,q)
 
-def pbitshiftleft(q,qq):
+def pbitshiftleft(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pbitshiftleft(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -902,7 +938,7 @@ def pbitshiftleft(q,qq):
         return [pbsl(qq,q2) for q2 in q]
     return qq<<int(q)
 
-def pbitshiftright(q,qq):
+def pbitshiftright(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pbitshiftright(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -911,7 +947,7 @@ def pbitshiftright(q,qq):
         return [pbitshiftright(qq,q2) for q2 in q]
     return qq>>int(q)
 
-def plteq(q,qq):
+def plteq(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [plteq(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -920,7 +956,7 @@ def plteq(q,qq):
         return [plteq(qq,q2) for q2 in q]
     return qq<=q
 
-def pgteq(q,qq):
+def pgteq(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pgteq(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -929,7 +965,7 @@ def pgteq(q,qq):
         return [pgteq(qq,q2) for q2 in q]
     return qq>=q
 
-def plessthan(q,qq):
+def plessthan(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [plessthan(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -938,7 +974,7 @@ def plessthan(q,qq):
         return [plessthan(qq,q2) for q2 in q]
     return qq<q
 
-def pgreaterthan(q,qq):
+def pgreaterthan(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pgreaterthan(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -947,7 +983,7 @@ def pgreaterthan(q,qq):
         return [pgreaterthan(qq,q2) for q2 in q]
     return qq>q
 
-def peq(q,qq):
+def peq(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [peq(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -956,7 +992,7 @@ def peq(q,qq):
         return [peq(qq,q2) for q2 in q]
     return qq==q
 
-def pneq(q,qq):
+def pneq(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pneq(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -980,7 +1016,7 @@ def ptwocomp(q):
         return [ptwocomp(qq) for qq in q]
     return 2**int(q.bit_length())-int(q)
 
-def pmod(q,qq):
+def pmod(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pmod(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -989,7 +1025,7 @@ def pmod(q,qq):
         return [pmod(qq,q2) for q2 in q]
     return qq%q
 
-def pdivide(q,qq):
+def pdivide(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pdivide(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -998,7 +1034,7 @@ def pdivide(q,qq):
         return [pdivide(qq,q2) for q2 in q]
     return qq/q
 
-def pplus(q,qq):
+def pplus(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pplus(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1007,7 +1043,7 @@ def pplus(q,qq):
         return [pplus(qq,q2) for q2 in q]
     return qq+q
 
-def pminus(q,qq):
+def pminus(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pminus(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1016,7 +1052,7 @@ def pminus(q,qq):
         return [pminus(qq,q2) for q2 in q]
     return qq-q
 
-def pmultiply(q,qq):
+def pmultiply(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pmultiply(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1040,7 +1076,7 @@ def phexagonal(q):
         return [phexagonal(qq) for qq in q]
     return 2*int(q)**2-int(q)
 
-def pand(q,qq):
+def pand(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pand(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1049,7 +1085,7 @@ def pand(q,qq):
         return [pand(qq,q2) for q2 in q]
     return int(qq)&int(q)
 
-def por(q,qq):
+def por(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [por(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1058,7 +1094,7 @@ def por(q,qq):
         return [por(qq,q2) for q2 in q]
     return int(qq)|int(q)
 
-def pnand(q,qq):
+def pnand(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pnand(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1069,7 +1105,7 @@ def pnand(q,qq):
     qq=int(qq)
     return 2**max(q.bit_length(),qq.bit_length())-(qq&q)-1
 
-def pnor(q,qq):
+def pnor(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pnor(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1078,7 +1114,7 @@ def pnor(q,qq):
         return [pnor(qq,q2) for q2 in q]
     return 2**(int(q)|int(qq)).bit_length()-(int(q)|int(qq))-1
 
-def pxor(q,qq):
+def pxor(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pxor(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1087,7 +1123,7 @@ def pxor(q,qq):
         return [pxor(qq,q2) for q2 in q]
     return int(qq)^int(q)
 
-def pxnor(q,qq):
+def pxnor(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1114,7 +1150,7 @@ def pround(q):
         return [pround(qq) for qq in q]
     return round(q)
 
-def pdivrem(q,qq):
+def pdivrem(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pdivrem(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1164,7 +1200,7 @@ def pcomplement(q):
         return [pcomplement(qq) for qq in q]
     return 1-q
 
-def pncr(q,qq):
+def pncr(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pncr(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1198,7 +1234,7 @@ def pfloat(q):
         return [pfloat(qq) for qq in q]
     return float(q)
 
-def pgcd(q,qq):
+def pgcd(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pgcd(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1212,7 +1248,7 @@ def phamming(q):
         return [phamming(qq) for qq in q]
     return hamming(int(q))
 
-def preadasbase(q,qq):
+def preadasbase(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [preadasbase(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1231,7 +1267,7 @@ def plog(q):
         return [plog(qq) for qq in q]
     return log(q)
 
-def plogx(q,qq):
+def plogx(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [plogx(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1245,7 +1281,7 @@ def plog10(q):
         return [plog10(qq) for qq in q]
     return log(q,10)
 
-def plcm(q,qq):
+def plcm(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [plcm(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
@@ -1266,7 +1302,7 @@ def plog2(q):
         return [plog2(qq) for qq in q]
     return log(q,2)
 
-def pmulinv(q,qq):
+def pmulinv(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [pmulinv(qq[i],q[i]) for i in range(min(len(q),len(qq)))]
@@ -1284,7 +1320,7 @@ def pdigitprod(q):
         k*=int(j)
     return k
 
-def ppolygon(q,qq):
+def ppolygon(qq,q):
     if isinstance(qq,list):
         if isinstance(q,list):
             return [ppolygon(qq[j],q[j]) for j in range(min(len(qq),len(q)))]
@@ -1332,7 +1368,7 @@ def puniqueprimefactors(q):
         return [puniqueprimefactors(qq) for qq in q]
     return getUnique(primeFactors(int(q)))
 
-def prange2ends(q,qq):
+def prange2ends(qq,q):
     if isinstance(q,list):
         if isinstance(qq,list):
             return [prange2ends(qq[i],q[i]) for i in range(min(len(q),len(qq)))]
@@ -1341,7 +1377,7 @@ def prange2ends(q,qq):
         return [prange2ends(qq2,q) for qq2 in qq]
     return list(range(int(qq),int(q)+1))
 
-def prandrange(q,qq):
+def prandrange(qq,q):
     if isinstance(q,list):
         if isinstance(qq,list):
             return [prandrange(qq[i],q[i]) for i in range(min(len(q),len(qq)))]
@@ -1412,7 +1448,14 @@ def patan(q):
 def pdoublefac(q):
     if isinstance(q,list):
         return [pdoublefac(qq) for qq in q]
-    return factorial2(int(q))
+    if isinstance(q,int):
+        k=1
+        kk=q
+        while(kk>0):
+            k*=kk
+            kk-=2
+        return k
+    return np.asscalar(factorial2(int(q)))
 
 def pexpon(q):
     if isinstance(q,list):
