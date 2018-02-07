@@ -641,6 +641,8 @@ def interpret(cc,stck,i,line):
     elif cc==u"Ļ":
         stck.append(plog(stck.pop()))
     elif cc==u"Ľ":
+        q=stck.pop()
+        qq=stck.pop()
         stck.append(plogx(qq,q))
     elif cc==u"Ĺ":
         q=stck.pop()
@@ -730,7 +732,7 @@ def interpret(cc,stck,i,line):
     elif cc==u"Ř":
         q=stck.pop()
         qq=stck.pop()
-        stck.append(prange(qq,q))
+        stck.append(prange2ends(qq,q))
     elif cc==u"ɽ":
         stck.append(int(random.random()*(2**32)))
     elif cc==u"ɾ":
@@ -888,7 +890,7 @@ def pmodpow(q,qq,qqq):
         return [pmodpow(qqq,qq,q2) for q2 in q]
     if isinstance(qqq,list):
         return [pmodpow(qqq2,qq,q) for qqq2 in qqq]
-    return pow(int(qqq),int(qq),int(q))
+    return [pow(int(qqq),int(qq),int(q))]
 
 def pdivides(qq,q):
     if isinstance(qq,list):
@@ -935,7 +937,7 @@ def pbitshiftleft(qq,q):
             return [pbitshiftleft(qq[i],q[i]) for i in range(min(len(qq),len(q)))]
         return [pbitshiftleft(qq2,q) for qq2 in qq]
     if isinstance(q,list):
-        return [pbsl(qq,q2) for q2 in q]
+        return [pbitshiftleft(qq,q2) for q2 in q]
     return qq<<int(q)
 
 def pbitshiftright(qq,q):
@@ -1351,7 +1353,7 @@ def pisprime(q):
 def pbin(q):
     if isinstance(q,list):
         return [pbin(qq) for qq in q]
-    return bin(int(q))
+    return (""+bin(int(q)))[2:]
 
 
 def pnpk(qq,q):
@@ -1482,7 +1484,7 @@ def pprimefactors(q):
 def prevdigits(q):
     if isinstance(q,list):
         return [prevdigits(qq) for qq in q]
-    return int((""+str(int(stck.pop())))[::-1])
+    return int((""+str(int(q)))[::-1])
 
 
 def isPrime(n):
