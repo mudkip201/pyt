@@ -747,6 +747,464 @@ def interpret(cc,stck,i,line):
         stck.append(random.random())
     elif cc==u"ř":
         stck.append(prange(stck.pop()))
+    elif cc==u"ʁ": #reduce array by operation (arr2[i]=oper(arr[i],arr[i+1])) of next character
+        i+=1
+        cc=line[i]
+        if cc==u"|":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pdivides(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pdivides(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"÷":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pintdiv(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pintdiv(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"^":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(ppow(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(ppow(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"«":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pbitshiftleft(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pbitshiftleft(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"»":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pbitshiftright(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pbitshiftright(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"≤":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(plteq(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(plteq(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"≥":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pgteq(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pgteq(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"<":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(plessthan(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(plessthan(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u">":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pgreaterthan(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pgreaterthan(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"=":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(peq(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(peq(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"≠":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pneq(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pneq(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"%":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pmod(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pmod(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"/":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pdiv(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pdiv(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"+":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pplus(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pplus(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"-":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pminus(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pminus(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"*":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pmultiply(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pmultiply(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"∧":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pand(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pand(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"∨":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(por(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(por(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"⊼":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pnand(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pnand(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"⊽":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pnor(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pnor(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"⊻":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pxor(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pxor(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"⊙":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pxnor(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pxnor(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"‰":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pdivrem(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pdivrem(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"ć":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pncr(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pncr(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"Ǥ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pgcd(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pgcd(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"Ĩ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(preadasbase(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(preadasbase(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"Ľ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(plogx(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(plogx(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"Ĺ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(plcm(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pclm(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"ɯ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pmulinv(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pmulinv(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"Ṕ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    print(ptobase(q[j],q[j+1])+"\n")
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    print(ptobase(q[j],q[j+1])+"\n")
+                stck.data=qq
+        elif cc==u"ᑭ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(ppolygon(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(ppolygon(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"ṕ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    print(ptobase(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    print(ptobase(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"₱":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pnpk(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(pnpk(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"Ř":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(prange2ends(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(prange2ends(q[j],q[j+1]))
+                stck.data=qq
+        elif cc==u"ɾ":
+            if isinstance(stck[-1],list):
+                q=stck.pop()
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(prandrange(q[j],q[j+1]))
+                stck.append(qq)
+            else:
+                q=stck.data
+                qq=[]
+                for j in range(len(q)-1):
+                    qq.append(prandrange(q[j],q[j+1]))
+                stck.data=qq
     elif cc==u"Ş":
         if(isinstance(stck[-1],list)):
             stck.append(sorted(stck.pop())[::-1])
