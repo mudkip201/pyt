@@ -1832,7 +1832,7 @@ def pnprime(q):
         return [pnprime(q2) for q2 in q]
     qq=[2]
     n=3
-    while(len(qq)<q):
+    while(len(qq)<int(q)):
         for p in qq:
             if n%p==0:
                 break
