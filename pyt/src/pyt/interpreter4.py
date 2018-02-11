@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɐɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝᴇḞƑᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚ⊤ťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·?:;±\'
+# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɐɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝᴇḞƑᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱᵽŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚ⊤ťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·?:;±\'
 
 
 
@@ -725,6 +725,8 @@ def interpret(cc,stck,i,line):
             stck.append([len(accel_asc(int(x))) for x in q])
         else:
             stck.append([len(accel_asc(int(q)))])
+    elif cc==u"ᵽ":
+        stck.append(pnprime(stck.pop()))
     elif cc==u"₱":
         q=stck.pop()
         qq=stck.pop()
@@ -1824,6 +1826,20 @@ def pnpk(qq,q):
     if isinstance(q,list):
         return [pnpk(qq,q2) for q2 in q]
     return factorial(int(qq))/factorial(int(qq)-int(q))
+
+def pnprime(q):
+    if(isinstance(q,list)):
+        return [pnprime(q2) for q2 in q]
+    qq=[2]
+    n=3
+    while(len(qq)<q):
+        for p in qq:
+            if n%p==0:
+                break
+        else:
+            qq.append(n)
+        n+=2
+    return qq[-1]
 
 def puniqueprimefactors(q):
     if isinstance(q,list):
