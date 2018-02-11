@@ -10,7 +10,7 @@
     '''
 
 
-# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɐɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝᴇḞƑᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚ⊤ťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·?:;±'
+# Codepage: '⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉¼½¾⅐⅑⅒⅓⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞⅟Ƨ°|!÷↑↓←↕↔⇹¬^«»≤≥<>=≠√∛∜∞∈~˜%/+-*△⬠⬡∧∨⊼⊽⊻⊙⌊⌈⎶‰×ÅÁąáɐɓÇČƇĆçč¢ćĉɔĐðḋ₫éǝᴇḞƑᵮǤĦĨƖǰḶĻĽĹŁĿļɬłɫṀϺɯɳṔƤǷҎᑭ₽Ṗ₱ᒆṕƥṗƿϼҏᵱŘɽɾɹʀřŕṛŞŠŜŚȘşŝšŤŦȚ⊤ťŧỤʊŽžµΠπƩφ≡‼`⦋⁺⁻₊₋0123456789⑴·?:;±\'
 
 
 
@@ -1318,6 +1318,8 @@ def interpret(cc,stck,i,line):
         i=string.find(line,";",i)
     elif cc==u"±":
         stck.append(np.sign(stck.pop()).tolist())
+    elif cc==u"\\":
+        stck.append(psetdifference(stck.pop(),stck.pop()))
     return stck,i
 
 
@@ -1943,6 +1945,19 @@ def prevdigits(q):
     if isinstance(q,list):
         return [prevdigits(qq) for qq in q]
     return int((""+str(int(q)))[::-1])
+
+def psetdifference(q,qq):
+    if isinstance(q,list):
+        qqq=[]
+        for qq2 in qq:
+            if qq2 not in q:
+                qqq.append(qq2)
+        return qqq
+    qqq=[]
+    for qq2 in qq:
+        if qq2!=q:
+            qqq.append(qq2)
+    return qqq
 
 
 def isPrime(n):
