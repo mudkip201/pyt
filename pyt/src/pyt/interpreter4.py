@@ -1400,7 +1400,9 @@ def pbitshiftleft(qq,q):
         return [pbitshiftleft(qq2,q) for qq2 in qq]
     if isinstance(q,list):
         return [pbitshiftleft(qq,q2) for q2 in q]
-    return qq<<int(q)
+    if isinstance(q,float):
+        q=int(q)
+    return qq<<q
 
 def pbitshiftright(qq,q):
     if isinstance(qq,list):
@@ -1632,6 +1634,8 @@ def pabs(q):
 def pdigitarray(q):
     if isinstance(q,list):
         return [pdigitarray(qq) for qq in q]
+    if isinstance(q,str) or isinstance(q,unicode):
+        return [qq for qq in q]
     return [int(x) for x in list(str(int(q)))]
 
 def pcosh(q):
