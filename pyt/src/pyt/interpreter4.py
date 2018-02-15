@@ -1465,7 +1465,7 @@ def pneq(qq,q):
         return [pneq(qq2,q) for qq2 in qq]
     if isinstance(q,list):
         return [pneq(qq,q2) for q2 in q]
-    return qq==q
+    return qq!=q
 
 def ppowconst(q,const):
     if isinstance(q,list):
