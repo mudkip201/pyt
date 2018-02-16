@@ -1636,7 +1636,7 @@ def pdigitarray(q):
         return [pdigitarray(qq) for qq in q]
     if isinstance(q,str) or isinstance(q,unicode):
         return [qq for qq in q]
-    return [int(x) for x in list(str(int(q)))]
+    return [int(x) for x in list(str(abs(int(q))))]
 
 def pcosh(q):
     if isinstance(q, list):
@@ -1782,7 +1782,7 @@ def pmulinv(qq,q):
 def pdigitprod(q):
     if isinstance(q,list):
         return [pdigitprod(qq) for qq in q]
-    w=str(int(q))
+    w=str(abs(int(q)))
     k=1
     for j in w:
         k*=int(j)
@@ -1876,7 +1876,7 @@ def prange(q):
 def psumdigits(q):
     if isinstance(q,list):
         return [psumdigits(qq) for qq in q]
-    w=str(int(q))
+    w=str(abs(int(q)))
     k=0
     for j in w:
         k+=int(j)
