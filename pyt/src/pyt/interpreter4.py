@@ -1134,13 +1134,13 @@ def interpret(cc,stck,i,line):
                 q=stck.pop()
                 qq=[]
                 for j in range(len(q)-1):
-                    print(ptobase(q[j],q[j+1])+"\n")
+                    print(ptobase(q[j],q[j+1])+u"\n")
                 stck.append(qq)
             else:
                 q=stck.data
                 qq=[]
                 for j in range(len(q)-1):
-                    print(ptobase(q[j],q[j+1])+"\n")
+                    print(ptobase(q[j],q[j+1])+u"\n")
                 stck.data=qq
         elif cc==u"ᑭ":
             if isinstance(stck[-1],list):
