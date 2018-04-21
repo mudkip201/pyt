@@ -913,13 +913,13 @@ def interpret(cc,stck,i,line):
                 q=stck.pop()
                 qq=[]
                 for j in range(len(q)-1):
-                    qq.append(pdiv(q[j],q[j+1]))
+                    qq.append(pdivide(q[j],q[j+1]))
                 stck.append(qq)
             else:
                 q=stck.data
                 qq=[]
                 for j in range(len(q)-1):
-                    qq.append(pdiv(q[j],q[j+1]))
+                    qq.append(pdivide(q[j],q[j+1]))
                 stck.data=qq
         elif cc==u"+":
             if isinstance(stck[-1],list):
